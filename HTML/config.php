@@ -1,0 +1,27 @@
+<?php
+
+  // DATABASE CONNECTION INFORMATION
+
+  const DB_HOST = '%DB_HOST%';
+  const DB_NAME = '%DB_NAME%';
+  const DB_USER = '%DB_USER%';
+  const DB_PASSWORD = '%DB_PASSWORD64%';
+
+  // CLUB LOGO INFORMATION
+
+  const LOGO_IMAGE = 'images/logo.png';
+  const LOGO_HEIGHT = 128;
+  const LOGO_WIDTH = 128;
+
+  // CLUB NAME INFORMATION
+
+  const ORG_NAME = 'ARC';
+  const ORG_LONG_NAME = 'Amateur Radio Club';
+
+  // PREFIX FOR GUEST USERS - DISABLES PASSWORD CHANGE CAPABILITY
+
+  const GUEST_PREFIX = 'JARS';
+
+  // APPLICATION VERSION
+
+  const APP_VERSION = '20260520.01';
