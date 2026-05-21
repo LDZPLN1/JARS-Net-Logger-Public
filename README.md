@@ -28,7 +28,7 @@ Features:
 - Group chat that links users from the live log viewer page and the net control log entry page. You can check in via chat or just have a chat with everyone while viewing or calling a net.
 - Net statistics; track nets by time period - week, past month, month to date, past year, year to date; view visitor counts by night of the week, the top 10 visitors, net control numbers and 12 month history of visitor numbers
 - Log viewer; View past logs by selecting the date to review
-- Once logs are uploaded at the end of a net, statistical data becomes available for reporting purposes.
+- Once logs are uploaded at the end of a net, statistical data becomes available for reporting purposes.\
 NOTE: All features are isolated based on the net you log into or select before viewing a live log. This includes chat, stats, viewing previous logs, etc. This means if you have 2 nets running at the same time on different repeaters, they are treated as separate entities across the board - viewers of net A can only chat with other users or net control on net A, and the same applies for anyone on net B - they can only interact with others on the same net
 
 Admin tools
