@@ -17,7 +17,7 @@ Users can be assigned one of 3 roles:
   - Guest accounts cannot change the account password, used here for substitue net control
   - By setting a prefix in the config.php file, any name created that matches that prefix will be considered a guest account; e.g., Prefix JARS matches JARS-Guest, JARSGuest01 JARS14727, etc. so try not to use callsign prefixes (unless you want everyone with that callsign prefix to be a guest)
 
-The client side is web based, running as a JavaScript application in the client web browser. No software needs to be insalled on the client machine.
+The client side is web based, running as a JavaScript application in the client web browser. No software needs to be installed on the client machine.
 
 The server side is a common Linux LAMP setup running Apache, MariaDB and PHP. NodeJS need to be installed as well for the live log and chat features to work.
 
