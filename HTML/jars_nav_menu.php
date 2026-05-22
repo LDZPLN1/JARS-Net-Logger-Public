@@ -28,7 +28,6 @@ this program. If not, see <https://www.gnu.org/licenses/>.
     'Net Log Entry' => 'jars_net_log_entry.php',
     'Net Log Viewer' => 'jars_net_log_viewer.php',
     'Net Log Stats' => 'jars_net_stats.php',
-    'JARS Soundboard' => 'jars_soundboard.php',
     'User Guide' => 'docs/JARS_Net_Logger_User_Guide.docx'
   ];
 
