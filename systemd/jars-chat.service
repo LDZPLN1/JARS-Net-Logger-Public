@@ -1,0 +1,13 @@
+[Unit]
+Description=JARS Chat Service
+After=network.target
+
+[Service]
+Type=simple
+User=[USER]
+WorkingDirectory=[path-to]/jars_chat_service
+ExecStart=/usr/bin/node [path-to]/jars_chat_service/index.js
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

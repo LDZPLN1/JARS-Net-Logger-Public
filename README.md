@@ -14,21 +14,20 @@ Users can be assigned one of 3 roles:
 - Standard user
   - Access to all but Admin tools (User Manager, Net Manager, Update Callsign, Export Data)
 - Guest User
-  - Guest accounts cannot change the account password, used here for substitue net control
+  - Guest accounts cannot change the account password, used here for substitute net control
   - By setting a prefix in the config.php file, any name created that matches that prefix will be considered a guest account; e.g., Prefix JARS matches JARS-Guest, JARSGuest01 JARS14727, etc. so try not to use callsign prefixes (unless you want everyone with that callsign prefix to be a guest)
 
 The client side is web based, running as a JavaScript application in the client web browser. No software needs to be installed on the client machine.
 
-The server side is a common Linux LAMP setup running Apache, MariaDB and PHP. NodeJS need to be installed as well for the live log and chat features to work.
+The server side is a common Linux LAMP setup running Apache, MariaDB and PHP. Node.js need to be installed as well for the live log and chat features to work.
 
 Features:
 - Log entry for nets with shortcuts to set flags for each entry (/S for short time, /M for mobile, /P for portable, etc.)
-- Suffix shortcuts for entry; entering -XXX (e.g. -9XA) will perform a suffic search. If a single entry is found it will get pulled in as if you typed the entire callsign. If multiple matches are found, a popup with the matching callsigns will appear, allowing net control to select the one they want
+- Suffix shortcuts for entry; entering -XXX (e.g. -9XA) will perform a suffix search. If a single entry is found it will get pulled in as if you typed the entire callsign. If multiple matches are found, a popup with the matching callsigns will appear, allowing net control to select the one they want
 - A live log viewer for guests to monitor the net session in real time
 - Group chat that links users from the live log viewer page and the net control log entry page. You can check in via chat or just have a chat with everyone while viewing or calling a net.
 - Net statistics; track nets by time period - week, past month, month to date, past year, year to date; view visitor counts by night of the week, the top 10 visitors, net control numbers and 12 month history of visitor numbers
 - Log viewer; View past logs by selecting the date to review
-- Once logs are uploaded at the end of a net, statistical data becomes available for reporting purposes.
 
 NOTE: All features are isolated based on the net you log into or select before viewing a live log. This includes chat, stats, viewing previous logs, etc. This means if you have 2 nets running at the same time on different repeaters, they are treated as separate entities across the board - viewers of net A can only chat with other users or net control on net A, and the same applies for anyone on net B - they can only interact with others on the same net
 
@@ -52,7 +51,7 @@ Package Requirements
 - `php`
 - `libapache2-mod-php`
 - `php-mysql`
-- `nodejs:`
+- `Node.js:`
   - `session.io`
   - `express`
   - `bufferutil` (optional)
@@ -69,15 +68,15 @@ Before running the installer, the following steps need to be completed.
 `GRANT ALL PRIVILEGES ON jars_net_logger.* TO 'jars-net-logger'@'localhost';`
 2. Install and configure Apache
    - Ensure SSL is properly configured
-   - Verify any firewall rules needed are in place
+   - Verify any firewall rules needed are in place. Only port tcp/443 inbound needs to be exposed
    - Create a virtual directory for the application (e.g., `/var/www/html/jars`)
-3. Install PHP and edit `php.ini`:
+3. Install PHP and edit `/etc/php/8.x/apache2/php.ini`:
    - Set `date.timezone` (e.g., `date.timezone = America/New_York`)
    - Set `session.cookie_lifetime = 0`
    - Set `session.gc_maxlifetime` to be longer than your longest net in seconds (e.g., `session.gc_maxlifetime = 14400`)
-4. Install and configure nodejs compoenents
+4. Install and configure Node.js componenets
    - Copy the index.js and package.json files to an empty directory and run `npm install`
-   - If you want it to run as a service, you can create a .service file to run it, just make sure it runs under the user that has access to the nodejs folder where index.js resides
+   - If you want it to run as a service, you can create a .service file to run it, just make sure it runs under the user that has access to the directory where index.js resides. See `/systemd/jars-chat.service` for an example. Create the new .service file in `/etc/systemd/system` then run `sudo systemctl daemon-reload`
 
 ## Installation
 Use the install.sh script and answer the prompts. It will load the initial database structure, configure Apache and copy the files to the Apache virtual directory. After the script runs, the application can be customized by editing the /var/www/html/[vdir]/config.php file:
