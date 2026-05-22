@@ -107,3 +107,15 @@ Answer the prompts. It will load the initial database structure, configure Apach
 
 * Guest account prefix\
   `const GUEST_PREFIX = 'JARS';`
+
+## Updating
+
+Similar to installation, but does not alter the config.php of an existing installation and only add/updates new/modified files
+
+- `git clone https://github.com/LDZPLN1/JARS-Net-Logger-Public.git`
+- `cd BASH`
+- `./build_installer.sh`
+- This will create a file named `jars-logger.tar.gz` in `JARS-Net-Logger-Public`
+- Copy this file to the machine you want to run it on and unpack it with `tar -xf jars-logger.tar.gz`
+- `cd build`
+- `./update.sh`
