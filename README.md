@@ -12,7 +12,7 @@ Users can be assigned one of 3 roles:
 - Admin User
   - Full access to all areas
 - Standard user
-  - Access to all but Admin tools (User Manager, Net Manager, Update Callsign, Export Data)
+  - Access to all but Admin tools
 - Guest User
   - Guest accounts cannot change the account password, used here for substitute net control
   - By setting a prefix in the config.php file, any name created that matches that prefix will be considered a guest account; e.g., Prefix JARS matches JARS-Guest, JARSGuest01 JARS14727, etc. so try not to use callsign prefixes (unless you want everyone with that callsign prefix to be a guest)
