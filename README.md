@@ -107,6 +107,13 @@ Answer the prompts. It will load the initial database structure, configure Apach
 * Guest account prefix\
   `const GUEST_PREFIX = 'JARS';`
 
+* External web links to display on nav menu\
+  `const WEB_LINKS = [`\
+  `  'JARS.net' => 'https://www.jars.net/',`\
+  `  'QRZ' => 'https://www.qrz.com/',`\
+  `  'ARRL' => 'https://www.arrl.org/'`\
+  `];`
+
 ## Updating
 
 Similar to installation, but does not alter the config.php file of an existing installation and only adda/updates new/modified files

@@ -25,3 +25,11 @@
   // APPLICATION VERSION
 
   const APP_VERSION = '20260520.01';
+
+  // EXTENAL WEB LINKS TO DISPLAY ON NAV MENU (OPENS IN NEW TAB)
+
+  const WEB_LINKS = [
+    'JARS.net' => 'https://www.jars.net/',
+    'QRZ' => 'https://www.qrz.com/',
+    'ARRL' => 'https://www.arrl.org/'
+  ];
