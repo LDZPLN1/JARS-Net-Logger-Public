@@ -60,10 +60,6 @@ if ($_SESSION['net_id'] == 0) {
 }
 ?>
   <input type="hidden" id="account" name="account" value="<?php echo $_SESSION['guest'];?>">
-  <audio id="audio_file"></audio>
-  <div id="overlay_window">
-    <div class="overlay_content_retro"></div>
-  </div>
   <div id="overlay_callsign" class="overlay">
     <div class="overlay_content">
       <span class="button_close_overlay" onclick="close_callsign()">&times;</span>
@@ -199,7 +195,6 @@ if ($_SESSION['net_id'] == 0) {
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="js/jars_net_log_entry.js"></script>
   <script type="text/javascript" src="js/jars_chat.js"></script>
-  <script type="text/javascript" src="js/retro.js"></script>
 </body>
 </html>
 <?php
