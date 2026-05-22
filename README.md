@@ -110,7 +110,7 @@ Answer the prompts. It will load the initial database structure, configure Apach
 
 ## Updating
 
-Similar to installation, but does not alter the config.php of an existing installation and only add/updates new/modified files
+Similar to installation, but does not alter the config.php file of an existing installation and only adda/updates new/modified files
 
 - `git clone https://github.com/LDZPLN1/JARS-Net-Logger-Public.git`
 - `cd BASH`
