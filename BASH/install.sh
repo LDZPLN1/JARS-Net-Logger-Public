@@ -186,9 +186,8 @@ sed -i "s/%DB_NAME%/$DB_NAME/" ./db_init_inst.sql
 echo
 
 if [ "$SKIP_MARIA" == "0" ]; then
-  echo -n "Creating database tables... "
+  echo "Creating database tables... "
   mysql -u "$DB_USER" --password="$DB_PASSWORD" "$DB_NAME" < ./db_init_inst.sql
-  echo "complete"
 else
   echo
   echo "Remember to import db_init_inst.sql on the database server to initialize the database"
