@@ -82,9 +82,8 @@ Before running the installer, the following steps need to be completed.
 
 - `git clone https://github.com/LDZPLN1/JARS-Net-Logger-Public.git`
 - `cd BASH`
-- `./build_installer.sh`
-- This will create a file named `jars-logger.tar.gz` in `JARS-Net-Logger-Public`
-- Copy this file to the machine you want to run it on and unpack it with `tar -xf jars-logger.tar.gz`
+- `./build_installer.sh` (This will create a file named `jars-logger.tar.gz` in `JARS-Net-Logger-Public`).
+- Copy `jars-logger.tar.gz` to the machine you want to install it on and unpack it with `tar -xf jars-logger.tar.gz`
 - `cd build`
 - `./install.sh`
 
