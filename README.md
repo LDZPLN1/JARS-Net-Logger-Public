@@ -79,7 +79,16 @@ Before running the installer, the following steps need to be completed.
    - If you want it to run as a service, you can create a .service file to run it, just make sure it runs under the user that has access to the directory where index.js resides. See `/systemd/jars-chat.service` for an example. Create the new .service file in `/etc/systemd/system` then run `sudo systemctl daemon-reload`
 
 ## Installation
-Use the install.sh script and answer the prompts. It will load the initial database structure, configure Apache and copy the files to the Apache virtual directory. After the script runs, the application can be customized by editing the /var/www/html/[vdir]/config.php file:
+
+- `git clone https://github.com/LDZPLN1/JARS-Net-Logger-Public.git`
+- `cd BASH`
+- `./build_installer.sh`
+- This will create a file named `jars-logger.tar.gz` in `JARS-Net-Logger-Public`
+- Copy this file to the machine you want to run it on and unpack it with `tar -xf jars-logger.tar.gz`
+- `cd build`
+- `./install.sh`
+
+Answer the prompts. It will load the initial database structure, configure Apache and copy the files to the Apache virtual directory. After the script runs, the application can be customized by editing the /var/www/html/[vdir]/config.php file:
 
 * Database connection information (set by install script)\
   `const DB_HOST = '';`\
