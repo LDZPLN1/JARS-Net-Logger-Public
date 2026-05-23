@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260518.01
+  REVISION 20260522.01
 
 */
 
@@ -126,7 +126,7 @@ function delete_row(f_source) {
   }
 
   update_counter();
-  update_upload_button();
+  update_buttons();
   update_live_logs();
 
   if (document.getElementById('check_ins').textContent  === '0') {
@@ -352,7 +352,7 @@ async function lookup_user(f_source, refresh) {
   f_delete_row.src = 'images/delete_red.png';
 
   update_counter();
-  update_upload_button();
+  update_buttons();
   update_live_logs();
   update_row_highlight(current_row);
 }
@@ -528,12 +528,12 @@ async function toggle_live_log() {
   enable_live_log = !enable_live_log
 
   if (enable_live_log) {
-    f_btn_live_log.title = 'Disable Live Log';
+    f_btn_live_log.title = 'Disable Live';
     f_btn_live_log.style.border = c_upd_btn_en_bdr;
     io_logs.emit('log-open', net_id);
     update_live_logs();
   } else {
-    f_btn_live_log.title = 'Enable Live Log';
+    f_btn_live_log.title = 'Go Live';
     f_btn_live_log.style.border = c_upd_btn_dis_bdr;
     io_logs.emit('log-close', net_id);
   }
@@ -575,12 +575,49 @@ function update_auto_hide() {
   });
 }
 
+// SET UPLOAD BUTTON STATE AND HOVER TEXT
+
+function update_buttons() {
+  const f_btn_upload_logs = document.getElementById('btn_upload_logs');
+  const f_btn_live_log = document.getElementById('btn_live_log');
+  const f_check_ins = document.getElementById('check_ins');
+
+  if (f_net_control.value.trim() !== '') {
+    if (f_check_ins.textContent > 0) {
+
+      // ENABLED
+
+      f_btn_upload_logs.style.border = c_upd_btn_en_bdr;
+      f_btn_upload_logs.title = 'Submit Log';
+      f_btn_upload_logs.disabled = false;
+    } else {
+
+      // DISABLED
+
+      f_btn_upload_logs.style.border = c_upd_btn_dis_bdr;
+      f_btn_upload_logs.disabled = true;
+
+      if (f_net_control.value.trim() == '') {
+        f_btn_upload_logs.title = 'Set Net Control';
+      } else {
+        f_btn_upload_logs.title = 'No Visitors to Submit';
+      }
+
+      f_btn_live_log.disabled = false;
+      f_btn_live_log.title = 'Go Live';
+    }
+  } else {
+    f_btn_live_log.disabled = true;
+    f_btn_live_log.title = 'Set Net Control';
+  }
+}
+
 // UPDATE FIELD TO UPPER CASE
 
 function update_case(f_source) {
   const callsign = f_source.value.toUpperCase();
   f_source.value = callsign;
-  update_upload_button();
+  update_buttons();
 }
 
 // UPDATE ROW HIGHLIGHTING WHEN CHECK OUT IS CHANGED
@@ -728,34 +765,6 @@ function update_row_highlight(row) {
   }
 }
 
-// SET UPLOAD BUTTON STATE AND HOVER TEXT
-
-function update_upload_button() {
-  const f_btn_upload_logs = document.getElementById('btn_upload_logs');
-  const f_check_ins = document.getElementById('check_ins');
-
-  if (f_check_ins.textContent > 0 && f_net_control.value.trim() !== '') {
-
-    // ENABLED
-
-    f_btn_upload_logs.style.border = c_upd_btn_en_bdr;
-    f_btn_upload_logs.title = 'Upload Data to Server';
-    f_btn_upload_logs.disabled = false;
-  } else {
-
-    // DISABLED
-
-    f_btn_upload_logs.style.border = c_upd_btn_dis_bdr;
-    f_btn_upload_logs.disabled = true;
-
-    if (f_net_control.value.trim() == '') {
-      f_btn_upload_logs.title = 'Set Net Control';
-    } else {
-      f_btn_upload_logs.title = 'No Visitors to Upload';
-    }
-  }
-}
-
 // UPDATE VISITOR INFORMATION
 
 async function update_user(f_source) {
@@ -830,6 +839,7 @@ window.addEventListener('beforeunload', (event) => {
 document.getElementById('log_date').value = f_header_date.textContent;
 preload_images();
 add_rows(1);
+update_buttons();
 
 if (f_net_control.value.trim() != '') {
   const focus_field = f_table_logs.rows[0].querySelector('.input_callsign');

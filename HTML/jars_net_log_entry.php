@@ -103,7 +103,7 @@ if ($_SESSION['net_id'] == 0) {
         <span>Check-Ins:</span><span id="check_ins">0</span>&nbsp;<span id="check_ins_unique">(0 Visitors)</span>
       </div>
       <div>
-        <button id="btn_live_log" class="button_m" title="Enable Live Log" onclick="toggle_live_log();">Go Live</button>
+        <button id="btn_live_log" class="button_m" title="Set Net Control" disabled onclick="toggle_live_log();">Go Live</button>
         <button id="btn_upload_logs" title="Set Net Control" disabled onclick="submit_logs(false);">Submit Log</button>
       </div>
     </div>
