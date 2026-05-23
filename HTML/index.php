@@ -118,6 +118,9 @@ function verify_login($pdo) {
       $_SESSION['net_id'] = 0;
       header("Location: jars_net_manager.php");
       exit();
+    } else {
+      header("Location: jars_logout.php");
+      exit();
     }
   } else {
       $log = date("Y-m-d H:i:s") . "\t" . $source . "\tLOGIN FAILED: BAD PASSWORD\t" . $username . "\n";
