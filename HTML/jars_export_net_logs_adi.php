@@ -101,26 +101,26 @@ while ($row = $sql_query->fetch(PDO::FETCH_ASSOC)) {
   }
 
   $qso_date = $row['date'];
-  $qso_date = str_replace("-", "", $qso_date) . ' ';
-  $adi_qso_date = '<qso_date:' . strlen($qso_date). '>' . $qso_date;
+  $qso_date = str_replace("-", "", $qso_date);
+  $adi_qso_date = '<qso_date:' . strlen($qso_date). '>' . $qso_date . ' ';
 
-  $location = explode(",", $row['location']);
-
-  if (trim($location[0]) != '') {
+  if ($row['location'] != '') {
+    $location = explode(",", $row['location']);
     $adi_qth = '<qth:' . strlen(trim($location[0])). '>' . trim($location[0]) . ' ';
+
+    if (count($location) > 1) {
+      if (trim($location[1]) != '') {
+        $adi_state = '<state:' . strlen(trim($location[1])). '>' . trim($location[1]) . ' ';
+      } else {
+        $adi_state = '';
+      }
+    }
   } else {
     $adi_qth = '';
+    $adi_state = '';
   }
 
-  if (count($location) > 1) {
-    if (trim($location[1]) != '') {
-      $adi_state = '<state:' . strlen(trim($location[1])). '>' . trim($location[1]) . ' ';
-    } else {
-      $adi_state = '';
-    }
-  }
-
-  $adi_station_callsign = '<station_callsign:' . strlen($row['net_control']). '>' . $row['net_control'];
+  $adi_station_callsign = '<station_callsign:' . strlen($row['net_control']). '>' . $row['net_control'] . ' ';
 
   fwrite($output, $adi_call . $adi_qso_date . $adi_band . $adi_freq . $adi_mode . $adi_submode . $adi_name . $adi_qth . $adi_state . $adi_station_callsign . "<eor>\n");
 }
