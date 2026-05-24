@@ -22,6 +22,8 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
+REVISION 20260523.01
+
 */
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['guest']) && isset($_SESSION['admin'])) {

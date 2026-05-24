@@ -20,7 +20,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-API REVISION 20260519.01
+API REVISION 20260521.01
 
 API LIST:
 
