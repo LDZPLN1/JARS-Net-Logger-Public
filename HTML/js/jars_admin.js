@@ -17,11 +17,28 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260522.01
+  REVISION 20260523.01
 
 */
 
 const dir_path = '/jars';
+
+const bands = {
+  '160m': [1.8, 2.0],
+  '80m': [3.5, 4.0],
+  '60m': [5.06, 5.45],
+  '40m': [7.0, 7.3],
+  '30m': [10.1, 10.15],
+  '20m': [14.0, 14.35],
+  '17m': [18.068, 18.168],
+  '15m': [21.0, 21.45],
+  '12m': [24.890, 24.99],
+  '10m': [28.0, 29.7],
+  '6m': [50, 54],
+  '2m': [144, 148],
+  '1.25m': [222, 225],
+  '70cm': [420, 450]
+}
 
 // ENABLE/DISABLE ADD BUTTON
 
@@ -102,18 +119,47 @@ function check_length(f_source) {
   }
 }
 
+// CHECK NET FREQUENCY
+
+function check_net_freq () {
+  const f_add_net_freq = document.getElementById('add_net_freq');
+  const freq_value = f_add_net_freq.value;
+  const f_add_net_mode = document.getElementById('add_net_mode');
+  const valid_input = /^\d*\.?\d*$/.test(freq_value) && freq_value !== '.' && freq_value !== '';
+  var use_band = '';
+
+  if (valid_input) {
+    Object.entries(bands).forEach(([band, freq_range]) => {
+      if (freq_range[0] <= freq_value && freq_value <= freq_range[1]) {
+        use_band = band;
+      }
+    });
+  }
+
+  if (use_band != '') {
+    document.getElementById('add_net_band').value = use_band;
+    f_add_net_freq.style.outline = '2px solid #00FF00';
+
+    if (use_band == '2m' || use_band == '1.25m' || use_band == '70cm') {
+      f_add_net_mode.value = 'FM';
+    } else {
+      f_add_net_mode.value = 'SSB';
+    }
+
+    update_submodes();
+    f_add_net_mode.focus();
+  } else {
+    f_add_net_freq.style.outline = '2px solid #FF0000';
+  }
+
+  update_net_create_button();
+}
+
 // CHECK NET NAME DURING CHANGE
 
-function check_net_name(mode) {
-  if (mode == 1) {
-    var f_net = document.getElementById('add_net_name');
-    var f_button = document.getElementById('btn_net_create');
-  } else if (mode == 2) {
-    var f_net = document.getElementById('chg_net_name');
-    var f_button = document.getElementById('btn_net_change');
-  } else {
-    return;
-  }
+function check_net_name() {
+  var f_net = document.getElementById('chg_net_name');
+  var f_button = document.getElementById('btn_net_change');
 
   if (f_net.value != '') {
     f_button.disabled = false;
@@ -254,9 +300,9 @@ function colorize_net_list() {
   const f_net_list = document.getElementById('net_list')
 
   for (let i = 0; i < f_net_list.options.length; i++) {
-    const f_option = f_net_list.options[i].dataset.id;
+    const net_data = f_net_list.options[i].dataset.id.split('::');
 
-    if (f_option == 0) {
+    if (net_data[0] == 0) {
       f_net_list.options[i].style.color = '#cf0000';
     }
   }
@@ -346,6 +392,26 @@ function overlay_handler_add(event) {
   }
 }
 
+// CAPTURE ESC KEY WHEN ADD OVERLAY IS OPEN
+
+function overlay_handler_add_net(event) {
+  if (event.key === 'Escape') {
+    document.removeEventListener('keydown', overlay_handler_add);
+    close_add();
+  } else if (event.key == 'Enter') {
+
+    if (event.target.id == 'add_net_name') {
+      event.preventDefault();
+      document.getElementById('add_net_freq').focus();
+    }
+
+    if (event.target.id == 'add_net_freq') {
+      event.preventDefault();
+      check_net_freq();
+    }
+  }
+}
+
 // CAPTURE ESC KEY WHEN CHANGE OVERLAY IS OPEN
 
 function overlay_handler_change(event) {
@@ -391,14 +457,21 @@ function show_add() {
 function show_add_net() {
   const f_overlay_add = document.getElementById("overlay_add");
   const f_add_net_name = document.getElementById('add_net_name');
+  const f_add_net_freq = document.getElementById('add_net_freq');
   const f_button = document.getElementById('btn_net_create');
 
-  document.addEventListener('keydown', overlay_handler_add);
+  f_add_net_name.value = '';
+  f_add_net_freq.value = '';
+  f_add_net_freq.style.outline = '';
+
+  document.addEventListener('keydown', overlay_handler_add_net);
   f_add_net_name.value = '';
   f_button.style.border = '2px solid #ff0000';
   f_button.disabled = true;
   f_overlay_add.style.display = 'flex';
   f_add_net_name.focus();
+
+  update_submodes()
 }
 
 // SHOW CHANGE PASSWORD OVERLAY
@@ -436,12 +509,12 @@ function show_change_net() {
   const f_button = document.getElementById('btn_net_change');
   const f_net_list = document.getElementById('net_list')
   const f_net_id = f_net_list.value;
-  const f_net_name = f_net_list.selectedOptions[0].textContent
+  const net_data = f_net_list.selectedOptions[0].dataset.id.split('::');
 
   document.addEventListener('keydown', overlay_handler_change);
   f_button.disabled = true;
   f_overlay_chg.style.display = 'flex';
-  f_chg_net_name.value = f_net_name;
+  f_chg_net_name.value = net_data[1];
   f_chg_net_name.focus();
   f_record_id.value = f_net_id;
 }
@@ -517,6 +590,68 @@ function update_net_buttons() {
   f_btn_net_edit.style.border = '2px solid #ff7f00';
   f_btn_net_active.style.border = '2px solid #ffff00';
   f_btn_net_delete.style.border = '2px solid #ff0000';
+}
+
+// CHECK NET CREATE BUTTON
+
+function update_net_create_button () {
+  const f_btn_net_create = document.getElementById('btn_net_create');
+  const f_add_net_freq = document.getElementById('add_net_freq');
+  const freq_value = f_add_net_freq.value;
+  const valid_input = /^\d*\.?\d*$/.test(freq_value) && freq_value !== '.' && freq_value !== '';
+  var use_band = '';
+
+  if (freq_value) {
+    Object.entries(bands).forEach(([band, freq_range]) => {
+      if (freq_range[0] <= freq_value && freq_value <= freq_range[1]) {
+        use_band = band;
+      }
+    });
+  }
+
+  if (use_band != '' && document.getElementById('add_net_name').value.trim() != '') {
+    f_btn_net_create.style.border = '2px solid #00ff00';
+    f_btn_net_create.disabled = false;
+  } else { 
+   f_btn_net_create.style.border = '2px solid #ff0000'; 
+    f_btn_net_create.disabled = true;
+  }
+}
+
+// UPDATE SUBMODES
+
+function update_submodes() {
+  const f_add_net_mode = document.getElementById('add_net_mode');
+  const f_row_net_submode = document.getElementById('row_net_submode');
+  const f_add_net_submode = document.getElementById('add_net_submode');
+
+  switch (f_add_net_mode.value) {
+    case 'AM':
+    case 'FM':
+      f_row_net_submode.style.display = 'none';
+      break;
+    case 'DIGITALVOICE':
+      options = `
+        <option value="C4FM">C4FM</option>
+        <option value="DMR" selected>DMR</option>
+        <option value="DSTAR">DSTAR</option>
+        <option value="FREEDV">FREEDV</option>
+        <option value="M17">M17</option>
+      `;
+
+      f_add_net_submode.innerHTML = options;
+      f_row_net_submode.style.display = 'table-row';
+      break;
+    case 'SSB':
+      options = `
+        <option value="LSB">LSB</option>
+        <option value="USB">USB</option>
+      `;
+
+      f_add_net_submode.innerHTML = options;
+      f_row_net_submode.style.display = 'table-row';
+      break;
+  }
 }
 
 // UPDATE USER BUTTONS

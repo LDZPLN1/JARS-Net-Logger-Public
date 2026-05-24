@@ -41,6 +41,10 @@ DROP TABLE IF EXISTS `nets`;
 CREATE TABLE `nets` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `net_name` varchar(64) DEFAULT NULL,
+  `band` varchar(5) DEFAULT NULL,
+  `mode` varchar(12) DEFAULT NULL,
+  `submode` varchar(6) DEFAULT NULL,
+  `frequency` decimal(10,6) NOT NULL DEFAULT 0.000000,
   `active` tinyint(1) unsigned NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE KEY `net_name` (`net_name`)

@@ -46,12 +46,17 @@ try {
   exit;
 }
 
-// ADI BASE VARIABLES - CHANGE TO SUIT YOUR REPEATER
+// GET NET INFO
 
-$band = '2m';
-$country = 'UNITED STATES OF AMERICA';
-$mode = 'FM';
-$repeater_frequency = '147.270';
+$sql_query = $pdo->prepare("SELECT band, mode, submode, frequency FROM nets WHERE id = :netid;");
+$sql_query->bindParam(':netid', $_SESSION['net_id'], PDO::PARAM_INT);
+$sql_query->execute();
+
+$result = $sql_query->fetch(PDO::FETCH_ASSOC);
+$band = $result['band'];
+$mode = $result['mode'];
+$submode = $result['submode'];
+$frequency = $result['frequency'];
 
 // DUMP LOGS TABLE
 
@@ -66,10 +71,16 @@ header('Content-Disposition: attachment; filename="jars_net_logs.adi"');
 
 $output = fopen('php://output', 'w');
 
-$adi_band = '<band:' . strlen($band) . '>' . $band;
-$adi_country = '<country:' . strlen($country) . '>' . $country;
-$adi_freq = '<freq:' . strlen($repeater_frequency) . '>' . $repeater_frequency;
-$adi_mode = '<mode:' . strlen($mode) . '>' . $mode;
+$adi_band = '<band:' . strlen($band) . '>' . $band . ' ';
+$adi_freq = '<freq:' . strlen($frequency) . '>' . $frequency . ' ';
+$adi_mode = '<mode:' . strlen($mode) . '>' . $mode . ' ';
+
+  if ($result['submode'] != '') {
+    $adi_submode = '<submode:' . strlen($result['submode']). '>' . $result['submode'] . ' ';
+  } else {
+    $adi_submode = '';
+  }
+
 
 // WRITE ADI HEADER
 
@@ -81,17 +92,37 @@ fwrite($output, '<programversion:' . strlen(APP_VERSION) . '>' . APP_VERSION . "
 fwrite($output, "<eoh>\n");
 
 while ($row = $sql_query->fetch(PDO::FETCH_ASSOC)) {
-  $adi_call = '<call:' . strlen($row['callsign']). '>' . $row['callsign'];
-  $adi_name = '<name:' . strlen($row['preferred_name']). '>' . $row['preferred_name'];
+  $adi_call = '<call:' . strlen($row['callsign']). '>' . $row['callsign'] . ' ';
+
+  if ($row['preferred_name'] != '') {
+    $adi_name = '<name:' . strlen($row['preferred_name']). '>' . $row['preferred_name'] . ' ';
+  } else {
+    $adi_name = '';
+  }
+
   $qso_date = $row['date'];
-  $qso_date = str_replace("-", "", $qso_date);
+  $qso_date = str_replace("-", "", $qso_date) . ' ';
   $adi_qso_date = '<qso_date:' . strlen($qso_date). '>' . $qso_date;
+
   $location = explode(",", $row['location']);
-  $adi_qth = '<qth:' . strlen(trim($location[0])). '>' . trim($location[0]);
-  $adi_state = '<state:' . strlen(trim($location[1])). '>' . trim($location[1]);
+
+  if (trim($location[0]) != '') {
+    $adi_qth = '<qth:' . strlen(trim($location[0])). '>' . trim($location[0]) . ' ';
+  } else {
+    $adi_qth = '';
+  }
+
+  if (count($location) > 1) {
+    if (trim($location[1]) != '') {
+      $adi_state = '<state:' . strlen(trim($location[1])). '>' . trim($location[1]) . ' ';
+    } else {
+      $adi_state = '';
+    }
+  }
+
   $adi_station_callsign = '<station_callsign:' . strlen($row['net_control']). '>' . $row['net_control'];
 
-  fwrite($output, $adi_call . ' ' . $adi_qso_date . ' ' . $adi_band . ' ' . $adi_freq . ' ' . $adi_mode . ' ' . $adi_name . ' ' . $adi_qth . ' ' . $adi_state . ' ' . $adi_country . ' ' . $adi_station_callsign . " <eor>\n");
+  fwrite($output, $adi_call . $adi_qso_date . $adi_band . $adi_freq . $adi_mode . $adi_submode . $adi_name . $adi_qth . $adi_state . $adi_station_callsign . "<eor>\n");
 }
 
 fclose($output);

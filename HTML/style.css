@@ -367,6 +367,10 @@ th {
   width: 150px
 }
 
+.color_grey {
+  color: #7f7f7f
+}
+
 .color_red {
   color: #ff0000
 }
@@ -570,6 +574,14 @@ th {
 .input_chat_text {
   display: flex;
   padding: 10px
+}
+
+.input_net_band {
+  width: 50px
+}
+
+.input_net_freq {
+  width: 100px
 }
 
 .input_width_100 {

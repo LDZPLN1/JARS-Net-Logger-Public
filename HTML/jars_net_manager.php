@@ -54,9 +54,19 @@ try {
 function add_net($pdo) {
   global $error;
 
+  $submode = null;
+
+  if ($_POST['add_net_mode'] == 'DIGITALVOICE' || $_POST['add_net_mode'] == 'SSB') {
+    $submode = $_POST['add_net_submode'];
+  }
+
   try {
-    $sql_query = $pdo->prepare("INSERT INTO nets VALUES (NULL, :netname, 1);");
+    $sql_query = $pdo->prepare("INSERT INTO nets VALUES (NULL, :netname, :band, :mode, :submode, :frequency, 1);");
     $sql_query->bindParam(':netname', $_POST['add_net_name'], PDO::PARAM_STR);
+    $sql_query->bindParam(':band', $_POST['add_net_band'], PDO::PARAM_STR);
+    $sql_query->bindParam(':mode', $_POST['add_net_mode'], PDO::PARAM_STR);
+    $sql_query->bindParam(':submode', $submode, PDO::PARAM_STR);
+    $sql_query->bindParam(':frequency', $_POST['add_net_freq'], PDO::PARAM_STR);
     $sql_query->execute();
   } catch (PDOException $e) {
     if ($e->getCode() == '23000') {
@@ -160,7 +170,35 @@ if (isset($_POST['mode'])) {
         </tr>
         <tr>
           <td>Net Name:</td>
-          <td><input type="text" id="add_net_name" name="add_net_name" class="input_width_300" oninput="check_net_name(1);"></td>
+          <td><input type="text" id="add_net_name" name="add_net_name" class="input_width_300" onchange="update_net_create_button();"></td>
+        </tr>
+        <tr>
+          <td>Frequency (MHz):</td>
+          <td><input type="text" id="add_net_freq" class="input_net_freq" name="add_net_freq" maxlength="11" onchange="check_net_freq();"></td>
+        </tr>
+        <tr>
+          <td>Band:</td>
+          <td><input type="text" id="add_net_band" class="input_net_band" name="add_net_band" value="" readonly></td>
+        </tr>
+        <tr>
+          <td>Mode:</td>
+          <td>
+            <select id="add_net_mode" name="add_net_mode" onchange="update_submodes();">
+              <option value="AM">AM</option>
+              <option value="DIGITALVOICE">Digital Voice</option>
+              <option value="FM" selected>FM</option>
+              <option value="SSB">SSB</option>
+            </select>
+          </td>
+        </tr>
+        <tr id="row_net_submode">
+          <td>Submode:</td>
+          <td>
+            <select id="add_net_submode" name="add_net_submode">
+              <option value="LSB">LSB</option>
+              <option value="USB">LSB</option>
+            </select>
+          </td>
         </tr>
         <tr>
           <td colspan="2" class="align_center">
@@ -184,7 +222,7 @@ if (isset($_POST['mode'])) {
         </tr>
         <tr>
           <td>Net Name:</td>
-          <td><input type="text" id="chg_net_name" name="chg_net_name" class="input_width_300" oninput="check_net_name(2);"></td>
+          <td><input type="text" id="chg_net_name" name="chg_net_name" class="input_width_300" oninput="check_net_name();"></td>
         </tr>
         <tr>
           <td colspan="2" class="align_center">
@@ -263,7 +301,19 @@ if (isset($_POST['mode'])) {
     echo '          <select id="net_list" name="net_id" size="4" onchange="update_net_buttons();">' . "\n";
 
     foreach ($result as $net) {
-      echo '            <option value="' . $net['id'] . '" data-id="' . $net['active'] . '">' . $net['net_name'] . "</option>\n";
+      if (str_ends_with($net['frequency'], '000')) {
+        $freq = substr($net['frequency'], 0, -3);
+      } else {
+        $freq = $net['frequency'];
+      }
+
+      $submode = '';
+
+      if ($net['submode'] != '') {
+        $submode = '/' . $net['submode'];
+      }
+
+      echo '            <option value="' . $net['id'] . '" data-id="' . $net['active'] . '::' . $net['net_name'] . '">' . $net['net_name'] . '&nbsp;&nbsp;(' . $freq . ' MHz; ' . $net['mode'] . $submode . ")</option>\n";
     }
 
     echo "          </select>\n";
