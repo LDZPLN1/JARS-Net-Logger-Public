@@ -195,8 +195,6 @@ if (isset($_POST['mode'])) {
           <td>Submode:</td>
           <td>
             <select id="add_net_submode" name="add_net_submode">
-              <option value="LSB">LSB</option>
-              <option value="USB">LSB</option>
             </select>
           </td>
         </tr>
