@@ -63,7 +63,7 @@ CREATE TABLE `visitors` (
 DROP TABLE IF EXISTS `announcements`;
 CREATE TABLE `announcements` (
   `id` int(10) UNSIGNED NOT NULL,
-  `announcement` tinytext DEFAULT NULL,
+  `announcement` varchar(100) DEFAULT NULL,
   `start_date` date NOT NULL,
   `end_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
