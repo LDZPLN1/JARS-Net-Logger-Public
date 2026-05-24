@@ -172,7 +172,7 @@ if (isset($_POST['mode'])) {
         </tr>
         <tr>
           <td>Net Name:</td>
-          <td><input type="text" id="add_net_name" name="add_net_name" class="input_width_300" onchange="update_net_create_button();"></td>
+          <td><input type="text" id="add_net_name" name="add_net_name" class="input_width_300" maxlength="64" onchange="update_net_create_button();"></td>
         </tr>
         <tr>
           <td>Frequency (MHz):</td>
@@ -222,7 +222,7 @@ if (isset($_POST['mode'])) {
         </tr>
         <tr>
           <td>Net Name:</td>
-          <td><input type="text" id="chg_net_name" name="chg_net_name" class="input_width_300" oninput="check_net_name();"></td>
+          <td><input type="text" id="chg_net_name" name="chg_net_name" class="input_width_300" maxlength="64" oninput="check_net_name();"></td>
         </tr>
         <tr>
           <td colspan="2" class="align_center">
