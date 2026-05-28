@@ -20,7 +20,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260523.01
+REVISION 20260528.01
 
 */
 
@@ -50,12 +50,15 @@ REVISION 20260523.01
 
   // DATA EXPORT LINKS FOR ADMIN USERS (DOWNLOAD FILE)
 
-  const EXPORT_LINKS = [
-    'Export Net Logs (CSV)' => 'jars_export_net_logs_csv.php',
-    'Export Net Logs (ADI)' => 'jars_export_net_logs_adi.php',
-    'Export Net Logs (SQL)' => 'jars_export_net_logs_sql.php',
-    'Export Visitor List (CSV)' => 'jars_export_visitor_list_csv.php',
-    'Export Visitor List (SQL)' => 'jars_export_visitor_list_sql.php'
+  const EXPORT_LOG_LINKS = [
+    'ADI/ADIF Format' => 'jars_export_net_logs.php?format=adi',
+    'CSV Format' => 'jars_export_net_logs.php?format=csv',
+    'SQL Format' => 'jars_export_net_logs.php?format=sql'
+  ];
+
+  const EXPORT_VIS_LINKS = [
+    'CSV Format' => 'jars_export_visitor_list.php?format=csv',
+    'SQL Format' => 'jars_export_visitor_list.php?format=sql'
   ];
 
   if (!isset($en_log_entry)) {
@@ -114,27 +117,52 @@ REVISION 20260523.01
       echo "                </li>\n";
     }
 
-    if ($_SESSION['admin'] == true && (count(ADM_LINKS) > 0 || count(EXPORT_LINKS) > 0)) {
+    if ($_SESSION['admin'] == true && (count(ADM_LINKS) > 0 || count(EXPORT_LOG_LINKS) > 0) || count(EXPORT_VIS_LINKS) > 0) {
       $first_link = ADM_LINKS[array_key_first(ADM_LINKS)];
 
-      if (!(count(ADM_LINKS) == 1 && $base == $first_link) || count(EXPORT_LINKS) > 0) {
+      if (!(count(ADM_LINKS) == 1 && $base == $first_link) || count(EXPORT_LOG_LINKS) > 0 || count(EXPORT_VIS_LINKS) > 0) {
         $add_hr = true;
         echo '                <li class="nav_sub_menu_1">' . "\n";
         echo "                  <span>Admin</span>\n";
         echo '                  <ul class="nav_items_1">' . "\n";
 
+        $add_hr_admin = false;
+
         foreach (ADM_LINKS as $title => $link) {
           if (!str_contains($link, $base)) {
+            $add_hr_admin = true;
             echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
           }
         }
 
-        if (count(EXPORT_LINKS) > 0) {
+        if (count(EXPORT_LOG_LINKS) > 0) {
+          if ($add_hr_admin) {
+            echo '                    <hr>';
+          }
+
           echo '                    <li class="nav_sub_menu_2">' . "\n";
-          echo "                      <span>Export Data</span>\n";
+          echo "                      <span>Export Net Logs</span>\n";
           echo '                      <ul class="nav_items_2">' . "\n";
 
-          foreach (EXPORT_LINKS as $title => $link) {
+          foreach (EXPORT_LOG_LINKS as $title => $link) {
+            echo '                        <li><a href="' . $link . '">' . $title . "</a></li>\n";
+          }
+
+          echo "                      </ul>\n";
+          echo "                    </li>\n";
+          $add_hr_admin = false;
+        }
+
+        if (count(EXPORT_VIS_LINKS) > 0) {
+          if ($add_hr_admin) {
+            echo '                    <hr>';
+          }
+
+          echo '                    <li class="nav_sub_menu_2">' . "\n";
+          echo "                      <span>Export Visitor List</span>\n";
+          echo '                      <ul class="nav_items_2">' . "\n";
+
+          foreach (EXPORT_VIS_LINKS as $title => $link) {
             echo '                        <li><a href="' . $link . '">' . $title . "</a></li>\n";
           }
 
