@@ -48,18 +48,36 @@ REVISION 20260528.01
     'Callsign Update' => 'jars_callsign_update.php'
   ];
 
-  // DATA EXPORT LINKS FOR ADMIN USERS (DOWNLOAD FILE)
+  // DATA EXP LINKS FOR ADMIN USERS (DOWNLOAD FILE)
 
-  const EXPORT_LOG_LINKS = [
+  const EXP_LOG_LINKS = [
     'ADI/ADIF Format' => 'jars_export_net_logs.php?format=adi',
     'CSV Format' => 'jars_export_net_logs.php?format=csv',
     'SQL Format' => 'jars_export_net_logs.php?format=sql'
   ];
 
-  const EXPORT_VIS_LINKS = [
+  const EXP_VIS_LINKS = [
     'CSV Format' => 'jars_export_visitor_list.php?format=csv',
     'SQL Format' => 'jars_export_visitor_list.php?format=sql'
   ];
+
+  $self = array_search($base, APP_LINKS);
+
+  if ($self) {
+#    unset(APP_LINKS[$self]);
+  }
+
+  $self = array_search($base, USR_LINKS);
+
+  if ($self) {
+#    unset(USR_LINKS[$self]);
+  }
+
+  $self = array_search($base, ADM_LINKS);
+
+  if ($self) {
+#    unset(ADM_LINKS[$self]);
+  }
 
   if (!isset($en_log_entry)) {
     $en_log_entry = false;
@@ -69,36 +87,30 @@ REVISION 20260528.01
     $en_live_log = false;
   }
 
-  echo '      <div class="header_right">' . "\n";
-  echo "        <nav>\n";
-  echo '          <ul class="nav_menu">' . "\n";
-  echo '            <li class="nav_menu_icon">' . "\n";
-  echo '              <span><img class="image_menu" src="images/menu.png"></span>' . "\n";
-  echo '              <ul class="nav_main_menu">' . "\n";
+  $show_settings = (((!$_SESSION['guest'] && count(USR_LINKS) > 0) || $en_log_entry) && !$en_live_log);
+  $show_admin = ($_SESSION['admin'] && (count(ADM_LINKS) > 0 || count(EXP_LOG_LINKS) > 0 || count(EXP_VIS_LINKS) > 0));
+  $show_exp_log = (count(EXP_LOG_LINKS) > 0);
+  $show_exp_vis = (count(EXP_VIS_LINKS) > 0);
+  $show_links = (((count(APP_LINKS) > 0 || count(WEB_LINKS) > 0) && !$en_live_log) || (count(WEB_LINKS) > 0 && $en_live_log));
+  $show_menu = (!$en_live_log || ($show_links && $en_live_log));
 
-  $add_hr = false;
-  $show_settings = false;
-  $web_only = $en_live_log;
+  $hr_main = ($show_settings || $show_admin || $show_links);
+  $hr_admin = (($show_admin && count(ADM_LINKS) > 0) && (count(EXP_LOG_LINKS) > 0 || count(EXP_VIS_LINKS) > 0));
+  $hr_link = (count(APP_LINKS) > 0 && count(WEB_LINKS) > 0);
 
-  if (!$en_live_log) {
-    if ($en_log_entry == true) {
-      $show_settings = true;
-    }
+  if ($show_menu) {
+    echo '      <div class="header_right">' . "\n";
+    echo "        <nav>\n";
+    echo '          <ul class="nav_menu">' . "\n";
+    echo '            <li class="nav_menu_icon">' . "\n";
+    echo '              <span><img class="image_menu" src="images/menu.png"></span>' . "\n";
+    echo '              <ul class="nav_main_menu">' . "\n";
+  }
 
-    if ($_SESSION['guest'] == false && count(USR_LINKS) > 0) {
-      $first_link = USR_LINKS[array_key_first(USR_LINKS)];
-
-      if (!(count(USR_LINKS) == 1 && $base == $first_link)) {
-        $show_settings = true;
-      }
-    }
-
-    if ($show_settings) {
-      $add_hr = true;
-      echo '                <li class="nav_sub_menu_1">' . "\n";
-      echo "                  <span>Settings</span>\n";
-      echo '                  <ul class="nav_items_1">' . "\n";
-    }
+  if ($show_settings) {
+    echo '                <li class="nav_sub_menu_1">' . "\n";
+    echo "                  <span>Settings</span>\n";
+    echo '                  <ul class="nav_items_1">' . "\n";
 
     if($en_log_entry) {
       echo '                    <li><a id="auto_hide" class="cursor" onclick="toggle_auto_hide();">Enable Auto Hide</a></li>' . "\n";
@@ -106,118 +118,92 @@ REVISION 20260528.01
 
     if ($_SESSION['guest'] == false) {
       foreach (USR_LINKS as $title => $link) {
-        if (!str_contains($link, $base)) {
-          echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
-        }
+        echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
       }
     }
 
-    if ($show_settings) {
-      echo "                  </ul>\n";
-      echo "                </li>\n";
-    }
-
-    if ($_SESSION['admin'] == true && (count(ADM_LINKS) > 0 || count(EXPORT_LOG_LINKS) > 0) || count(EXPORT_VIS_LINKS) > 0) {
-      $first_link = ADM_LINKS[array_key_first(ADM_LINKS)];
-
-      if (!(count(ADM_LINKS) == 1 && $base == $first_link) || count(EXPORT_LOG_LINKS) > 0 || count(EXPORT_VIS_LINKS) > 0) {
-        $add_hr = true;
-        echo '                <li class="nav_sub_menu_1">' . "\n";
-        echo "                  <span>Admin</span>\n";
-        echo '                  <ul class="nav_items_1">' . "\n";
-
-        $add_hr_admin = false;
-
-        foreach (ADM_LINKS as $title => $link) {
-          if (!str_contains($link, $base)) {
-            $add_hr_admin = true;
-            echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
-          }
-        }
-
-        if (count(EXPORT_LOG_LINKS) > 0) {
-          if ($add_hr_admin) {
-            echo '                    <hr>';
-          }
-
-          echo '                    <li class="nav_sub_menu_2">' . "\n";
-          echo "                      <span>Export Net Logs</span>\n";
-          echo '                      <ul class="nav_items_2">' . "\n";
-
-          foreach (EXPORT_LOG_LINKS as $title => $link) {
-            echo '                        <li><a href="' . $link . '">' . $title . "</a></li>\n";
-          }
-
-          echo "                      </ul>\n";
-          echo "                    </li>\n";
-          $add_hr_admin = false;
-        }
-
-        if (count(EXPORT_VIS_LINKS) > 0) {
-          if ($add_hr_admin) {
-            echo '                    <hr>';
-          }
-
-          echo '                    <li class="nav_sub_menu_2">' . "\n";
-          echo "                      <span>Export Visitor List</span>\n";
-          echo '                      <ul class="nav_items_2">' . "\n";
-
-          foreach (EXPORT_VIS_LINKS as $title => $link) {
-            echo '                        <li><a href="' . $link . '">' . $title . "</a></li>\n";
-          }
-
-          echo "                      </ul>\n";
-          echo "                    </li>\n";
-        }
-
-        echo "                  </ul>\n";
-        echo "                </li>\n";
-      }
-    }
+    echo "                  </ul>\n";
+    echo "                </li>\n";
   }
 
-  if (count(APP_LINKS) > 0 || count(WEB_LINKS) > 0) {
-    $add_hr = true;
+  if ($show_admin) {
+    echo '                <li class="nav_sub_menu_1">' . "\n";
+    echo "                  <span>Admin</span>\n";
+    echo '                  <ul class="nav_items_1">' . "\n";
+
+    foreach (ADM_LINKS as $title => $link) {
+      echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
+    }
+
+    if ($hr_admin) {
+      echo "                    <hr>\n";
+    }
+
+    if ($show_exp_log) {
+      echo '                    <li class="nav_sub_menu_2">' . "\n";
+      echo "                      <span>Export Net Logs</span>\n";
+      echo '                      <ul class="nav_items_2">' . "\n";
+
+      foreach (EXP_LOG_LINKS as $title => $link) {
+        echo '                        <li><a href="' . $link . '">' . $title . "</a></li>\n";
+      }
+
+      echo "                      </ul>\n";
+      echo "                    </li>\n";
+    }
+
+    if ($show_exp_vis) {
+      echo '                    <li class="nav_sub_menu_2">' . "\n";
+      echo "                      <span>Export Visitor List</span>\n";
+      echo '                      <ul class="nav_items_2">' . "\n";
+
+      foreach (EXP_VIS_LINKS as $title => $link) {
+        echo '                        <li><a href="' . $link . '">' . $title . "</a></li>\n";
+      }
+
+      echo "                      </ul>\n";
+      echo "                    </li>\n";
+    }
+
+    echo "                  </ul>\n";
+    echo "                </li>\n";
+  }
+
+  if ($show_links) {
     echo '                <li class="nav_sub_menu_1">' . "\n";
     echo "                  <span>Links</span>\n";
     echo '                  <ul class="nav_items_1">' . "\n";
-  }
 
-  if (!$en_live_log) {
-    if (count(APP_LINKS) > 0) {
+    if (!$en_live_log) {
       foreach (APP_LINKS as $title => $link) {
-        if (!str_contains($link, $base)) {
-          echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
-        }
+        echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
       }
     }
 
-    if (count(APP_LINKS) > 0 && count(WEB_LINKS) >0) {
+    if ($hr_link) {
       echo "                    <hr>\n";
     }
-  }
 
-  if (count(WEB_LINKS) > 0) {
     foreach (WEB_LINKS as $title => $link) {
       echo '                    <li><a href="' . $link . '" target="_blank" rel="noopener noreferrer">' . $title . '</a></li>' . "\n";
     }
-  }
 
-  if (count(APP_LINKS) > 0 || count(WEB_LINKS) > 0) {
     echo "                  </ul>\n";
     echo "                </li>\n";
   }
 
   if (!$en_live_log) {
-    if ($add_hr == true) {
+    if ($hr_main) {
       echo "                <hr>\n";
     }
 
     echo '                <li><a href="jars_logout.php">Log Out</a></li>' . "\n";
   }
 
-  echo "              </ul>\n";
-  echo "            </li>\n";
-  echo "          </ul>\n";
-  echo "        </nav>\n";
-  echo "      </div>\n";
+  if ($show_menu) {
+    echo "              </ul>\n";
+    echo "            </li>\n";
+    echo "          </ul>\n";
+    echo "        </nav>\n";
+    echo "      </div>\n";
+  }
