@@ -81,9 +81,7 @@ function export_sql($pdo) {
   $sql_query = $pdo->query("SHOW CREATE TABLE `visitors`");
   $result = $sql_query->fetch(PDO::FETCH_NUM);
 
-  if ($result) {
-    fwrite($output, $result[1] . ";\n\n");
-  }
+  if ($result) fwrite($output, $result[1] . ";\n\n");
 
   $sql_query = $pdo->query("SELECT * FROM visitors ORDER BY callsign;");
 

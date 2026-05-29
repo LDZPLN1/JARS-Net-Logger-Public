@@ -95,9 +95,7 @@ function export_adi($pdo) {
       $location = explode(",", $row['location']);
       $adi_qth = '<qth:' . strlen(trim($location[0])). '>' . trim($location[0]) . ' ';
 
-      if (count($location) > 1) {
-        $adi_state = (trim($location[1]) != '') ? '<state:' . strlen(trim($location[1])). '>' . trim($location[1]) . ' ' : '';
-      }
+      if (count($location) > 1) $adi_state = (trim($location[1]) != '') ? '<state:' . strlen(trim($location[1])). '>' . trim($location[1]) . ' ' : '';
     } else {
       $adi_qth = '';
       $adi_state = '';
@@ -144,10 +142,8 @@ function export_sql($pdo) {
 
   $sql_query = $pdo->query("SHOW CREATE TABLE `logs`");
   $result = $sql_query->fetch(PDO::FETCH_NUM);
-    
-  if ($result) {
-    fwrite($output, $result[1] . ";\n\n");
-  }
+
+  if ($result) fwrite($output, $result[1] . ";\n\n");
 
   $sql_query = $pdo->prepare("SELECT * FROM logs WHERE net_id = :netid ORDER BY date, sequence;");
   $sql_query->bindParam(':netid', $_SESSION['net_id'], PDO::PARAM_INT);

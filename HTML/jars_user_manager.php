@@ -67,9 +67,7 @@ function add_user($pdo) {
     $sql_query->bindParam(':password', $hash, PDO::PARAM_STR);
     $sql_query->execute();
   } catch (PDOException $e) {
-    if ($e->getCode() == '23000') {
-        $error = 'Name Already Exists in Database';
-    }
+    if ($e->getCode() == '23000') $error = 'Name Already Exists in Database';
   }
 }
 
@@ -135,9 +133,7 @@ if (isset($_POST['mode'])) {
   <meta name="language" content="English" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<?php
-  echo '  <title>' . ORG_NAME . " User Manager</title>\n";
-?>
+  <title><?php echo ORG_NAME; ?> User Manager</title>
   <link rel='stylesheet' type='text/css' href='style.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -148,9 +144,7 @@ if (isset($_POST['mode'])) {
   <div id="overlay_add" class="overlay">
     <div class="overlay_content">
       <span class="button_close_overlay" onclick="close_add()">&times;</span>
-<?php
-    echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
-?>
+      <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <table class="form_table">
         <tr>
           <td colspan="6" class="td_height"></td>
@@ -185,9 +179,7 @@ if (isset($_POST['mode'])) {
   <div id="overlay_chg" class="overlay">
     <div class="overlay_content">
       <span class="button_close_overlay" onclick="close_change()">&times;</span>
-<?php
-    echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
-?>
+      <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <input type="hidden" id="record_id" name="record_id" value="0">
       <table class="form_table">
         <tr>
@@ -217,9 +209,7 @@ if (isset($_POST['mode'])) {
   </div>
   <div id="overlay_del" class="overlay">
     <div class="overlay_content">
-<?php
-    echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
-?>
+<?php echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n"; ?>
       <input type="hidden" id="record_id_del" name="record_id" value="0">
       <table class="form_table">
         <tr>
@@ -241,18 +231,13 @@ if (isset($_POST['mode'])) {
   $date = new DateTimeImmutable();
   $base = basename(__FILE__);
   require_once('jars_header.php');
-
-  echo '    <div class="content_top">Welcome <span id="session_id">' . $_SESSION['user_id'] . "</span></div>\n";
-  echo "    <hr>\n";
-  echo '    <div class="content_main">' . "\n";
-
-  if ($error != '') {
-    echo '      <div class="message_error">' . $error . "</div>\n";
-  }
-
-  if ($message != '') {
-    echo '      <div class="message_ok">' . $message . "</div>\n";
-  }
+?>
+    <div class="content_top">Welcome <span id="session_id"><?php echo $_SESSION['user_id']; ?></span></div>
+    <hr>
+    <div class="content_main">
+<?php
+  if ($error != '') echo '      <div class="message_error">' . $error . "</div>\n";
+  if ($message != '') echo '      <div class="message_ok">' . $message . "</div>\n";
 
   $sql_query = $pdo->prepare("SELECT id, username, admin FROM auth ORDER BY admin DESC, username;");
   $sql_query->execute();
@@ -288,13 +273,9 @@ if (isset($_POST['mode'])) {
   }
 ?>
     </div>
-<?php
-  require_once('jars_footer.php');
-?>
+<?php require_once('jars_footer.php'); ?>
   </div>
   <script type="text/javascript" src="js/jars_admin.js"></script>
 </body>
 </html>
-<?php
-ob_end_flush();
-?>
+<?php ob_end_flush(); ?>

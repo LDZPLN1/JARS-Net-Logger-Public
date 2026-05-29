@@ -20,7 +20,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260518.01
+REVISION 20260528.01
 
 */
 
@@ -28,13 +28,17 @@ REVISION 20260518.01
     <hr>
     <div class="footer">
 <?php
-  if (!isset($en_log_entry)) {
-    $en_log_entry = false;
-  }
+  if (!isset($en_log_entry)) $en_log_entry = false;
+  if ($en_log_entry) echo '      <div id="footer_shortcuts" class="footer_shortcuts" onclick="toggle_shortcuts();">View Shortcuts / Legend &#9660;</div>' . "\n";
+
+  echo '      <div class="footer_copyright">Copyright &copy; 2026 Douglas Graham [';
 
   if ($en_log_entry) {
-    echo '      <div id="footer_shortcuts" class="footer_shortcuts" onclick="toggle_shortcuts();">View Shortcuts / Legend &#9660;</div>' . "\n";
+    echo '<span class="cursor" onclick="show_overlay();" title="Go down a rabbit hole">AB9XA</span>';
+  } else {
+    echo 'AB9XA';
   }
+
+  echo "]</div>\n";
 ?>
-      <div class="footer_copyright">Copyright &copy; 2026 Douglas Graham [AB9XA]</div>
     </div>

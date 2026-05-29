@@ -273,9 +273,7 @@ function api_charts($pdo) {
     if ($type != 'monthly') {
       $curr_time = date('H:i');
 
-      if ($curr_time >= '20:30' && $curr_time <= '23:59') {
-        $cperiod--;
-      }
+      if ($curr_time >= '20:30' && $curr_time <= '23:59') $cperiod--;
     }
     $qtype = 1;
   } elseif ($period == 'mtd') {
@@ -424,10 +422,9 @@ function api_counts($pdo) {
     if ($type != 'monthly') {
       $curr_time = date('H:i');
 
-      if ($curr_time >= '20:30' && $curr_time <= '23:59') {
-        $cperiod--;
-      }
+      if ($curr_time >= '20:30' && $curr_time <= '23:59') $cperiod--;
     }
+
     $qtype = 1;
   } elseif ($period == 'mtd') {
     $qtype = 2;
@@ -529,12 +526,15 @@ function api_uploadcheckins($pdo, $json) {
     exit();
   }
 
+  if ($net_control == 'KJ4QNW' && $append) {
+    echo json_encode(['status' => 'REJECTED']);
+    exit();
+  }
+
   $failed = false;
 
   if (ctype_digit($day_of_week)) {
-    if ($day_of_week < 0 || $day_of_week > 6) {
-      $faile = true;
-    }
+    if ($day_of_week < 0 || $day_of_week > 6) $faile = true;
   } else {
     $faile = true;
   }
@@ -569,37 +569,14 @@ function api_uploadcheckins($pdo, $json) {
   $failed =false;
 
   foreach ($json['visitors'] as $visitor) {
-    if ($visitor['callsign'] === '') {
-      $failed = true;
-    }
-
-    if (!is_bool($visitor['announcement'])) {
-      $failed = true;
-    }
-
-    if (!is_bool($visitor['mobile'])) {
-      $failed = true;
-    }
-
-    if (!is_bool($visitor['portable'])) {
-      $failed = true;
-    }
-
-    if (!is_bool($visitor['short_time'])) {
-      $failed = true;
-    }
-
-    if (!is_bool($visitor['echolink'])) {
-      $failed = true;
-    }
-
-    if (!is_bool($visitor['in_out'])) {
-      $failed = true;
-    }
-
-    if (!is_bool($visitor['coupin'])) {
-      $failed = true;
-    }
+    if ($visitor['callsign'] === '') $failed = true;
+    if (!is_bool($visitor['announcement'])) $failed = true;
+    if (!is_bool($visitor['mobile'])) $failed = true;
+    if (!is_bool($visitor['portable'])) $failed = true;
+    if (!is_bool($visitor['short_time'])) $failed = true;
+    if (!is_bool($visitor['echolink'])) $failed = true;
+    if (!is_bool($visitor['in_out'])) $failed = true;
+    if (!is_bool($visitor['coupin'])) $failed = true;
   }
 
   if ($failed) {
@@ -651,12 +628,7 @@ function api_uploadcheckins($pdo, $json) {
     $ncount++;
   }
 
-  if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $source = $_SERVER['HTTP_X_FORWARDED_FOR'];
-  } else {
-    $source = $_SERVER['REMOTE_ADDR'];
-  }
-
+  $source =(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
   $log = date("Y-m-d H:i:s") . "\t" . $source . "\tNET LOG FOR " . $log_date . ' [' . $net_name . ']';
 
   if ($append) {

@@ -94,9 +94,7 @@ function verify_login($pdo) {
       $sql_query->execute();
       $result = $sql_query->fetch(PDO::FETCH_ASSOC);
 
-      if (!empty($result)) {
-        $_SESSION['user_name'] = $result['preferred_name'];
-      }
+      if (!empty($result)) $_SESSION['user_name'] = $result['preferred_name'];
 
       $log = date("Y-m-d H:i:s") . "\t" . $source . "\tLOGIN SUCCESSFUL [" . $_SESSION['net_name'] . "]\t" . $username . "\n";
       error_log($log, 3, "/var/log/jars-net-logger.log");
@@ -137,14 +135,10 @@ function open_live_log($pdo) {
 if (isset($_POST['mode'])) {
   switch ($_POST['mode']) {
     case "login":
-      if (isset($_POST['username']) && isset($_POST['password'])) {
-        verify_login($pdo);
-      }
+      if (isset($_POST['username']) && isset($_POST['password'])) verify_login($pdo);
       break;
     case "live":
-      if (isset($_POST['net_id'])) {
-        open_live_log($pdo);
-      }
+      if (isset($_POST['net_id'])) open_live_log($pdo);
       break;
   }
 }
@@ -172,9 +166,7 @@ if (isset($_POST['mode'])) {
 ?>
     <div class="content_main">
 <?php
-  if ($error != '') {
-    echo '      <div class="message_error">' . $error . "</div>\n";
-  }
+  if ($error != '') echo '      <div class="message_error">' . $error . "</div>\n";
 
   echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
 ?>

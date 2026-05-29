@@ -83,9 +83,7 @@ function update_callsign($pdo) {
   $sql_query->execute();
   $result = $sql_query->fetch(PDO::FETCH_ASSOC);
 
-  if (!empty($result)) {
-    $update = 1;
-  }
+  if (!empty($result)) $update = 1;
 
   // CHECK CALL FOR () MARKINGS
 
@@ -144,9 +142,7 @@ if (isset($_POST['mode'])) {
   <meta name="language" content="English" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<?php
-  echo '  <title>' . ORG_NAME . " Callsign Update</title>\n";
-?>
+  <title><?php echo ORG_NAME; ?> Callsign Update</title>
   <link rel='stylesheet' type='text/css' href='style.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -156,9 +152,7 @@ if (isset($_POST['mode'])) {
 <body onload="init_update_callsign();">
   <div id="overlay_chg" class="overlay">
     <div class="overlay_content">
-<?php
-    echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
-?>
+    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <input type="hidden" id="old_call" name="old_call" value="">
       <input type="hidden" id="new_call" name="new_call" value="">
       <table class="form_table">
@@ -184,15 +178,11 @@ if (isset($_POST['mode'])) {
   $date = new DateTimeImmutable();
   $base = basename(__FILE__);
   require_once('jars_header.php');
-
-  echo '    <div class="content_top">Welcome <span id="session_id">' . $_SESSION['user_id'] . "</span></div>\n";
-  echo "    <hr>\n";
-  echo '    <div class="content_main">' . "\n";
-
-  if ($message != '') {
-    echo '<div class="message_ok">' . $message . "</div>\n";
-  }
 ?>
+  <div class="content_top">Welcome <span id="session_id"><?php echo $_SESSION['user_id']; ?></span></div>
+  <hr>
+  <div class="content_main">
+<?php if ($message != '') echo '<div class="message_ok">' . $message . "</div>\n"; ?>
       <div class="message_yellow">Making a callsign update will:</div><br>
         <table>
           <tr class="color_yellow">
@@ -214,13 +204,9 @@ if (isset($_POST['mode'])) {
         <input type="hidden" id="valid_callsign" name="valid_callsign" value="0">
         <div class="align_center"><button type="button" id="btn_update_callsign" class="button_red" onclick="show_change_callsign();">Update Callsign</button></div>
       </div>
-<?php
-  require_once('jars_footer.php');
-?>
+<?php require_once('jars_footer.php'); ?>
   </div>
   <script type="text/javascript" src="js/jars_admin.js"></script>
 </body>
 </html>
-<?php
-ob_end_flush();
-?>
+<?php ob_end_flush(); ?>

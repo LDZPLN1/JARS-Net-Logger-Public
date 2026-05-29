@@ -62,30 +62,16 @@ REVISION 20260528.01
   ];
 
   $self = array_search($base, $app_links);
-
-  if ($self !== false) {
-      unset($app_links[$self]);
-  }
+  if ($self !== false) unset($app_links[$self]);
 
   $self = array_search($base, $usr_links);
-
-  if ($self !== false) {
-    unset($usr_links[$self]);
-  }
+  if ($self !== false) unset($usr_links[$self]);
 
   $self = array_search($base, $adm_links);
+  if ($self !== false) unset($adm_links[$self]);
 
-  if ($self !== false) {
-    unset($adm_links[$self]);
-  }
-
-  if (!isset($en_log_entry)) {
-    $en_log_entry = false;
-  }
-
-  if (!isset($en_live_log)) {
-    $en_live_log = false;
-  }
+  if (!isset($en_log_entry)) $en_log_entry = false;
+  if (!isset($en_live_log)) $en_live_log = false;
 
   $admin = (!isset($_SESSION['admin'])) ? false : $_SESSION['admin'];
   $guest = (!isset($_SESSION['guest'])) ? false : $_SESSION['guest'];
@@ -115,9 +101,7 @@ REVISION 20260528.01
     echo "                  <span>Settings</span>\n";
     echo '                  <ul class="nav_items_1">' . "\n";
 
-    if($en_log_entry) {
-      echo '                    <li><a id="auto_hide" class="cursor" onclick="toggle_auto_hide();">Enable Auto Hide</a></li>' . "\n";
-    }
+    if($en_log_entry) echo '                    <li><a id="auto_hide" class="cursor" onclick="toggle_auto_hide();">Enable Auto Hide</a></li>' . "\n";
 
     if ($_SESSION['guest'] == false) {
       foreach ($usr_links as $title => $link) {
@@ -138,9 +122,7 @@ REVISION 20260528.01
       echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
     }
 
-    if ($dsp_hr_adm) {
-      echo "                    <hr>\n";
-    }
+    if ($dsp_hr_adm) echo "                    <hr>\n";
 
     if ($dsp_exp_log) {
       echo '                    <li class="nav_sub_menu_2">' . "\n";
@@ -183,9 +165,7 @@ REVISION 20260528.01
       }
     }
 
-    if ($dsp_hr_lnk) {
-      echo "                    <hr>\n";
-    }
+    if ($dsp_hr_lnk) echo "                    <hr>\n";
 
     foreach (WEB_LINKS as $title => $link) {
       echo '                    <li><a href="' . $link . '" target="_blank" rel="noopener noreferrer">' . $title . '</a></li>' . "\n";
@@ -196,9 +176,7 @@ REVISION 20260528.01
   }
 
   if (!$en_live_log) {
-    if ($dsp_hr_mnu) {
-      echo "                <hr>\n";
-    }
+    if ($dsp_hr_mnu) echo "                <hr>\n";
 
     echo '                <li><a href="jars_logout.php">Log Out</a></li>' . "\n";
   }

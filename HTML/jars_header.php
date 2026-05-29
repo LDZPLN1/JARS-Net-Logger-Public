@@ -20,7 +20,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260520.01
+REVISION 20260528.01
 
 */
 
@@ -48,9 +48,7 @@ REVISION 20260520.01
   if (isset($_SESSION['user_id'])) {
     echo '        <div class="header_user">' . $_SESSION['user_id'];
 
-    if (isset($_SESSION['user_name'])) {
-      echo ' (' . $_SESSION['user_name'] . ')';
-    }
+    if (isset($_SESSION['user_name'])) echo ' (' . $_SESSION['user_name'] . ')';
 
     echo "</div>\n";
   }
@@ -60,10 +58,6 @@ REVISION 20260520.01
 ?>
         </div>
       </div>
-<?php
-  if ($base != 'index.php') {
-    require_once "jars_nav_menu.php";
-  }
-?>
+<?php if ($base != 'index.php') require_once "jars_nav_menu.php"; ?>
     </div>
     <hr>

@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260523.01
+REVISION 20260528.01
 
 */
 
@@ -42,9 +42,7 @@ require_once('config.php');
   <meta name="language" content="English" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<?php
-  echo '  <title>' . ORG_NAME . " Net Log Entry</title>\n";
-?>
+  <title><?php echo ORG_NAME; ?> Net Log Entry</title>
   <link rel='stylesheet' type='text/css' href='style.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,12 +88,7 @@ if ($_SESSION['net_id'] == 0) {
       <div>
 <?php
   echo '        <span>Net Control:</span><input type="text" maxlength="6" id="net_control" class="input_width_100" placeholder="Enter Callsign" onchange="update_case(this);" ';
-
-  if ($_SESSION['guest'] == false && $_SESSION['user_id'] != 'ADMIN') {
-    echo 'value="' . $_SESSION['user_id'] . '">' . "\n";
-  } else {
-    echo "autofocus>\n";
-  }
+  echo ($_SESSION['guest'] == false && $_SESSION['user_id'] != 'ADMIN') ? 'value="' . $_SESSION['user_id'] . '">' . "\n" : "autofocus>\n";
 ?>
       </div>
       <div>
@@ -135,9 +128,7 @@ if ($_SESSION['net_id'] == 0) {
         </tbody>
       </table>
     </div>
-<?php
-  require_once('jars_footer.php');
-?>
+<?php require_once('jars_footer.php'); ?>
     <div id="shortcuts" class="shortcuts">
       <table id="table_shortcuts">
         <tr>
@@ -198,6 +189,4 @@ if ($_SESSION['net_id'] == 0) {
   <script type="text/javascript" src="js/jars_chat.js"></script>
 </body>
 </html>
-<?php
-ob_end_flush();
-?>
+<?php ob_end_flush(); ?>

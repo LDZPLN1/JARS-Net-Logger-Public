@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260520.01
+REVISION 20260528.01
 
 */
 
@@ -42,9 +42,7 @@ require_once('config.php');
   <meta name="language" content="English" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<?php
-  echo '  <title>' . ORG_NAME . " Net Log Viewer</title>\n";
-?>
+  <title><?php echo ORG_NAME; ?> Net Log Viewer</title>
   <link rel='stylesheet' type='text/css' href='style.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -102,13 +100,9 @@ require_once('config.php');
         </tbody>
       </table>
     </div>
-<?php
-  require_once('jars_footer.php');
-?>
+<?php require_once('jars_footer.php'); ?>
   </div>
   <script type="text/javascript" src="js/jars_net_log_viewer.js"></script>
 </body>
 </html>
-<?php
-ob_end_flush();
-?>
+<?php ob_end_flush(); ?>

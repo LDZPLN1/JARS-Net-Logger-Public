@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260523.01
+REVISION 20260528.01
 
 */
 
@@ -71,9 +71,7 @@ function add_net($pdo) {
     $sql_query->bindParam(':frequency', $_POST['add_net_freq'], PDO::PARAM_STR);
     $sql_query->execute();
   } catch (PDOException $e) {
-    if ($e->getCode() == '23000') {
-      $error = 'Name Already Exists in Database';
-    }
+    if ($e->getCode() == '23000') $error = 'Name Already Exists in Database';
   }
 }
 // CHANGE NET NAME
@@ -100,10 +98,8 @@ function delete_net($pdo) {
     $sql_query->execute();
 
     // RESET NET_ID IF CURRENT NET IS DELETED
-    
-    if ($_POST['record_id'] == $_SESSION['net_id']) {
-      $_SESSION['net_id'] = '0';
-    }
+
+    if ($_POST['record_id'] == $_SESSION['net_id']) $_SESSION['net_id'] = '0';
   } catch (PDOException $e) {
     $error = 'Error Trying to Delete Net From Database';
   }
@@ -150,9 +146,7 @@ if (isset($_POST['mode'])) {
   <meta name="language" content="English" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<?php
-  echo '  <title>' . ORG_NAME . " Net Manager</title>\n";
-?>
+  <title><?php echo ORG_NAME; ?> Net Manager</title>
   <link rel='stylesheet' type='text/css' href='style.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -163,9 +157,7 @@ if (isset($_POST['mode'])) {
   <div id="overlay_add" class="overlay">
     <div class="overlay_content">
       <span class="button_close_overlay" onclick="close_add()">&times;</span>
-<?php
-    echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
-?>
+      <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <table class="form_table">
         <tr>
           <td colspan="2" class="td_height"></td>
@@ -212,9 +204,7 @@ if (isset($_POST['mode'])) {
   <div id="overlay_chg" class="overlay">
     <div class="overlay_content">
       <span class="button_close_overlay" onclick="close_change()">&times;</span>
-<?php
-    echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
-?>
+      <form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
       <input type="hidden" id="record_id" name="record_id" value="0">
       <table class="form_table">
         <tr>
@@ -251,9 +241,7 @@ if (isset($_POST['mode'])) {
   </div>
   <div id="overlay_del_2" class="overlay">
     <div class="overlay_content">
-<?php
-    echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
-?>
+      <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <input type="hidden" id="record_id_del" name="record_id" value="0">
       <table class="form_table">
         <tr>
@@ -275,22 +263,18 @@ if (isset($_POST['mode'])) {
   $date = new DateTimeImmutable();
   $base = basename(__FILE__);
   require_once('jars_header.php');
-
-  echo '    <div class="content_top">Welcome ' . $_SESSION['user_id'] . "</div>\n";
-  echo "    <hr>\n";
-  echo '    <div class="content_main">' . "\n";
-
-  if ($error != '') {
-    echo '<div class="message_error">' . $error . "</div>\n";
-  }
+?>
+    <div class="content_top">Welcome <?php echo $_SESSION['user_id']; ?></div>
+    <hr>
+    <div class="content_main">
+<?php
+  if ($error != '') echo '<div class="message_error">' . $error . "</div>\n";
 
   $sql_query = $pdo->prepare("SELECT * FROM nets ORDER BY active DESC, net_name;");
   $sql_query->execute();
   $result = $sql_query->fetchAll(PDO::FETCH_ASSOC);
 
-  if (!$result) {
-    echo '      <div class="message_ok">Please Create Your First Net</div>' . "\n";
-  }
+  if (!$result) echo '      <div class="message_ok">Please Create Your First Net</div>' . "\n";
 
   echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
   echo '      <div class="selection_list">' . "\n";
@@ -301,17 +285,10 @@ if (isset($_POST['mode'])) {
     echo '          <select id="net_list" name="net_id" size="4" onchange="update_net_buttons();">' . "\n";
 
     foreach ($result as $net) {
-      if (str_ends_with($net['frequency'], '000')) {
-        $freq = substr($net['frequency'], 0, -3);
-      } else {
-        $freq = $net['frequency'];
-      }
-
+      $freq = (str_ends_with($net['frequency'], '000')) ? substr($net['frequency'], 0, -3) : $net['frequency'];
       $submode = '';
 
-      if ($net['submode'] != '') {
-        $submode = '/' . $net['submode'];
-      }
+      if ($net['submode'] != '') $submode = '/' . $net['submode'];
 
       echo '            <option value="' . $net['id'] . '" data-id="' . $net['active'] . '::' . $net['net_name'] . '">' . $net['net_name'] . '&nbsp;&nbsp;(' . $freq . ' MHz; ' . $net['mode'] . $submode . ")</option>\n";
     }
@@ -321,17 +298,11 @@ if (isset($_POST['mode'])) {
 
   echo "        </div>\n";
 
-  if ($result) {
-    echo "        <div></div>\n";
-  }
+  if ($result) echo "        <div></div>\n";
 
   echo '        <div class="align_';
 
-  if ($result) {
-    echo 'left';
-  } else {
-    echo 'center';
-  }
+  echo ($result) ? 'left' : 'center';
 
   echo '">' . "\n";
   echo '          <button type="button" name="mode" value="add" class="button_green_m" onclick="show_add_net();">Add Net</button><br>' . "\n";
@@ -340,21 +311,15 @@ if (isset($_POST['mode'])) {
   echo '          <button type="button" name="mode" value="delete" id="btn_net_delete" class="button_grey" onclick="show_delete_1();">Delete Net</button>' . "\n";
   echo "        </div>\n";
 
-  if (!$result) {
-    echo "        <div></div>\n";
-  }
+  if (!$result) echo "        <div></div>\n";
 
   echo "      </div>\n";
   echo "      </form>\n";
 ?>
     </div>
-<?php
-  require_once('jars_footer.php');
-?>
+<?php require_once('jars_footer.php'); ?>
   </div>
   <script type="text/javascript" src="js/jars_admin.js"></script>
 </body>
 </html>
-<?php
-ob_end_flush();
-?>
+<?php ob_end_flush(); ?>

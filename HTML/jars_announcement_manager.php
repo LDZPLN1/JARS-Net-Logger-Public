@@ -141,9 +141,7 @@ if (isset($_POST['mode']) && isset($_POST['record_id'])) {
   $sql_query->execute();
   $result = $sql_query->fetchAll(PDO::FETCH_ASSOC);
 
-  if (!$result) {
-    echo '      <div class="message_ok">Please Create Your First Announcement</div>' . "\n";
-  }
+  if (!$result) echo '      <div class="message_ok">Please Create Your First Announcement</div>' . "\n";
 ?>
         <table id="table_logs">
           <thead>
@@ -169,18 +167,14 @@ if (isset($_POST['mode']) && isset($_POST['record_id'])) {
     echo "            <td>\n";
     echo '              <input type="date" class="end_date" value="' . $announcement['end_date'] . '" min="2026-01-01" max="2040-12-31"';
 
-    if ($announcement['end_date'] === null) {
-      echo ' disabled';
-    }
+    if ($announcement['end_date'] === null) echo ' disabled';
 
     echo ">\n";
     echo "            </td>\n";
     echo '            <td class="checkbox_log_ac">' . "\n";
     echo '              <input type="checkbox" class="cbx_no_end" onclick="toggle_no_end(this);"';
 
-    if ($announcement['end_date'] === null) {
-      echo ' checked';
-    }
+    if ($announcement['end_date'] === null) echo ' checked';
 
     echo '>';
     echo "            </td>\n";

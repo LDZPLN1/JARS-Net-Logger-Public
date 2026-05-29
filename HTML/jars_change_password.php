@@ -112,9 +112,7 @@ if (isset($_POST['mode'])) {
   <meta name="language" content="English" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<?php
-  echo '  <title>' . ORG_NAME . " Change Password</title>\n";
-?>
+  <title><?php echo ORG_NAME; ?> Change Password</title>
   <link rel='stylesheet' type='text/css' href='style.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,21 +125,15 @@ if (isset($_POST['mode'])) {
   $date = new DateTimeImmutable();
   $base = basename(__FILE__);
   require_once('jars_header.php');
-
-  echo '    <div class="content_top">Changing Password for User ' . $_SESSION['user_id'] . "</div>\n";
-  echo "    <hr>\n";
-  echo '    <div class="content_main">' . "\n";
-
-  if ($error != '') {
-    echo '<div class="message_error">' . $error . "</div>\n";
-  }
-
-  if ($message != '') {
-    echo '<div class="message_ok">' . $message . "</div>\n";
-  }
-
-  echo '      <form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n";
 ?>
+    <div class="content_top">Changing Password for User <?php echo $_SESSION['user_id']; ?></div>
+    <hr>
+    <div class="content_main">
+<?php
+  if ($error != '') echo '<div class="message_error">' . $error . "</div>\n";
+  if ($message != '') echo '<div class="message_ok">' . $message . "</div>\n";
+?>
+      <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <table class="form_table">
         <tr>
           <td>Old Password:</td>
@@ -169,13 +161,9 @@ if (isset($_POST['mode'])) {
       </table>
       </form>
     </div>
-<?php
-  require_once('jars_footer.php');
-?>
+<?php require_once('jars_footer.php'); ?>
   </div>
   <script type="text/javascript" src="js/jars_change_password.js"></script>
 </body>
 </html>
-<?php
-ob_end_flush();
-?>
+<?php ob_end_flush(); ?>
