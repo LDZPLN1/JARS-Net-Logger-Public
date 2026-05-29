@@ -42,8 +42,8 @@ REVISION 20260528.01
     $page_title = ucwords($base_name);
   }
 
-  echo '        <div class="header_title">' . ORG_NAME . ' ' . $page_title . "</div>\n";
   echo '        <div class="header_org">' . ORG_LONG_NAME . "</div>\n";
+  echo '        <div class="header_title">' . ORG_NAME . ' ' . $page_title . "</div>\n";
 
   if (isset($_SESSION['user_id'])) {
     echo '        <div class="header_user">' . $_SESSION['user_id'];

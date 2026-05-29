@@ -524,9 +524,9 @@ th {
 }
 
 .header_org {
-  color: #005fef;
-  font-size: 28px;
-  text-shadow: 1px 1px 0px #000000, 2px 2px 4px #007fbf
+  color: #005fbf;
+  font-size: 36px;
+  text-shadow: 1px 1px 0px #000000, 2px 2px 1px #2f2f4f, 3px 3px 2px #2f2f9f
 }
 
 .header_right {
@@ -539,7 +539,7 @@ th {
 }
 
 .header_title {
-  font-size: 36px
+  font-size: 24px
 }
 
 .header_user {
