@@ -20,7 +20,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-API REVISION 20260521.01
+API REVISION 20260528.01
 
 API LIST:
 
@@ -158,11 +158,7 @@ function api_lookup($pdo) {
     $sql_query->execute();
     $cresult = $sql_query->fetch(PDO::FETCH_ASSOC);
 
-    if ($cresult['count'] === null) {
-      $ci_count = 0;
-    } else {
-      $ci_count = $cresult['count'];
-    }
+    $ci_count = ($cresult['count'] === null) ? 0 : $cresult['count'];
 
     $sql_query = $pdo->prepare("SELECT SUM(subq.days_visited) as count FROM (SELECT COUNT(DISTINCT callsign) AS days_visited FROM logs WHERE net_id = :netid AND callsign = :callsign AND net_control = :netcontrol GROUP BY date) as subq;");
     $sql_query->bindParam(':netid', $net_id, PDO::PARAM_INT);
@@ -171,11 +167,7 @@ function api_lookup($pdo) {
     $sql_query->execute();
     $cresult = $sql_query->fetch(PDO::FETCH_ASSOC);
 
-    if ($cresult['count'] === null) {
-      $ci_net_count = 0;
-    } else {
-      $ci_net_count = $cresult['count'];
-    }
+    $ci_net_count = ($cresult['count'] === null) ? 0 : $cresult['count'];
 
     echo json_encode(['status' => 'SUCCESS', 'callsign' => $db_callsign, 'preferred_name' => $result[0]['preferred_name'], 'location' => $result[0]['location'], 'notes' => $result[0]['notes'], 'lid' => $result[0]['lid'], 'ci_count' => $ci_count, 'ci_net_count' => $ci_net_count]);
   } else {
@@ -465,11 +457,8 @@ function api_counts($pdo) {
   $sql_query->execute();
   $result = $sql_query->fetch(PDO::FETCH_ASSOC);
 
-  if ($result['total_checkins'] == null) {
-    $count = 0;
-  } else {
-    $count = $result['total_checkins'];
-  }
+  $count = ($result['total_checkins'] == null) ? 0 : $result['total_checkins'];
+
   echo json_encode(['status' => 'SUCCESS', 'count' => $count]);
 }
 
@@ -514,12 +503,7 @@ function api_updateuser($pdo, $json) {
   $sql_query->bindParam(':lid', $lid, PDO::PARAM_BOOL);
   $sql_query->execute();
 
-  if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $source = $_SERVER['HTTP_X_FORWARDED_FOR'];
-  } else {
-    $source = $_SERVER['REMOTE_ADDR'];
-  }
-
+  $source = (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
   $log = date("Y-m-d H:i:s") . "\t" . $source . "\tVISITOR " . $callsign . " UPDATED\t" . $_SESSION['user_id'] . "\n";
   error_log($log, 3, "/var/log/jars-net-logger.log");
 

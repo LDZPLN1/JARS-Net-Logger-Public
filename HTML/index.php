@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260523.01
+REVISION 20260528.01
 
 */
 
@@ -56,12 +56,7 @@ try {
 function verify_login($pdo) {
   global $error;
 
-  if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $source = $_SERVER['HTTP_X_FORWARDED_FOR'];
-  } else {
-    $source = $_SERVER['REMOTE_ADDR'];
-  }
-
+  $source = (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
   $username = strtoupper(trim($_POST['username']));
   $password = $_POST['password'];
 
@@ -81,17 +76,8 @@ function verify_login($pdo) {
     session_regenerate_id(true);
     $_SESSION['user_id'] = $result['username'];
 
-    if (str_starts_with($result['username'], strtoupper(GUEST_PREFIX))) {
-      $_SESSION['guest'] = true;
-    } else {
-      $_SESSION['guest'] = false;
-    }
-
-    if ($result['admin'] == 1) {
-      $_SESSION['admin'] = true;
-    } else {
-      $_SESSION['admin'] = false;
-    }
+    $_SESSION['admin'] = ($result['admin'] == 1) ? true : false;
+    $_SESSION['guest'] = (str_starts_with($result['username'], strtoupper(GUEST_PREFIX))) ? true : false;
 
     if (isset($_POST['net_id'])) {
       $_SESSION['net_id'] = $_POST['net_id'];

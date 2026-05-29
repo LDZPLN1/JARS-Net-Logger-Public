@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260520.01
+REVISION 20260528.01
 
 */
 
@@ -62,6 +62,7 @@ function change_password($pdo) {
     $error = 'Password change failed';
     return;
   }
+
   $old_password = $_POST['old_password'];
   $new_password_1 = $_POST['new_password_1'];
 

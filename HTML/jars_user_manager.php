@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260520.01
+REVISION 20260528.01
 
 */
 
@@ -268,17 +268,9 @@ if (isset($_POST['mode'])) {
     echo '          <select id="user_list" name="userid" size="10" onchange="update_user_buttons();">' . "\n";
 
     foreach ($result as $user) {
-      if ($user['admin'] == 1) {
-        $flag = ' [ADMIN]';
-      } else {
-        $flag = '';
-      }
+      $flag = ($user['admin'] == 1) ? ' [ADMIN]' : '';
+      $guest = (str_starts_with($user['username'], strtoupper(GUEST_PREFIX))) ? '1' : '0';
 
-      if (str_starts_with($user['username'], strtoupper(GUEST_PREFIX))) {
-        $guest = '1';
-      } else {
-        $guest = '0';
-      }
       echo '            <option value="' . $user['id'] . '" data-id="' . $user['username'] . ':' . $guest . '">' . $user['username'] . $flag . "</option>\n";
     }
 

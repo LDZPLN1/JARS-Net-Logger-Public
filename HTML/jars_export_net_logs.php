@@ -73,12 +73,7 @@ function export_adi($pdo) {
   $adi_band = '<band:' . strlen($band) . '>' . $band . ' ';
   $adi_freq = '<freq:' . strlen($frequency) . '>' . $frequency . ' ';
   $adi_mode = '<mode:' . strlen($mode) . '>' . $mode . ' ';
-
-    if ($result['submode'] != '') {
-      $adi_submode = '<submode:' . strlen($result['submode']). '>' . $result['submode'] . ' ';
-    } else {
-      $adi_submode = '';
-    }
+  $adi_submode = ($result['submode'] != '') ? '<submode:' . strlen($result['submode']). '>' . $result['submode'] . ' ' : '';
 
   // WRITE ADI HEADER
 
@@ -91,13 +86,7 @@ function export_adi($pdo) {
 
   while ($row = $sql_query->fetch(PDO::FETCH_ASSOC)) {
     $adi_call = '<call:' . strlen($row['callsign']). '>' . $row['callsign'] . ' ';
-
-    if ($row['preferred_name'] != '') {
-      $adi_name = '<name:' . strlen($row['preferred_name']). '>' . $row['preferred_name'] . ' ';
-    } else {
-      $adi_name = '';
-    }
-
+    $adi_name = ($row['preferred_name'] != '') ? '<name:' . strlen($row['preferred_name']). '>' . $row['preferred_name'] . ' ' : '';
     $qso_date = $row['date'];
     $qso_date = str_replace("-", "", $qso_date);
     $adi_qso_date = '<qso_date:' . strlen($qso_date). '>' . $qso_date . ' ';
@@ -107,11 +96,7 @@ function export_adi($pdo) {
       $adi_qth = '<qth:' . strlen(trim($location[0])). '>' . trim($location[0]) . ' ';
 
       if (count($location) > 1) {
-        if (trim($location[1]) != '') {
-          $adi_state = '<state:' . strlen(trim($location[1])). '>' . trim($location[1]) . ' ';
-        } else {
-          $adi_state = '';
-        }
+        $adi_state = (trim($location[1]) != '') ? '<state:' . strlen(trim($location[1])). '>' . trim($location[1]) . ' ' : '';
       }
     } else {
       $adi_qth = '';
@@ -172,11 +157,7 @@ function export_sql($pdo) {
     $values = [];
 
     foreach ($row as $value) {
-      if ($value === null) {
-        $values[] = "NULL";
-      } else {
-        $values[] = $pdo->quote($value);
-      }
+      $values[] =  ($value === null) ? "NULL" : $pdo->quote($value);
     }
 
     $new_row = 'INSERT INTO `logs` VALUES (' . implode(", ", $values) . ");\n";

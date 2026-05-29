@@ -293,7 +293,12 @@ th {
 
 .chat_icon {
   height: 80px;
-  width: 80px;
+  transition: transform 0.25s ease;
+  width: 80px
+}
+
+.chat_icon:hover {
+  transform: scale(1.2)
 }
 
 .chat_icon.fade {

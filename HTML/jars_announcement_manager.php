@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260521.01
+REVISION 20260528.01
 
 */
 
@@ -57,11 +57,7 @@ $sql_query->execute();
 // ADD/CHANGE ANNOUNCEMENT
 
 function change_announcement($pdo) {
-  if ($_POST['end_date'] == '') {
-    $end_date = null;
-  } else {
-    $end_date = $_POST['end_date'];
-  }
+  $end_date = ($_POST['end_date'] == '') ? null : $_POST['end_date'];
 
   try {
     if ($_POST['record_id'] == -1) {

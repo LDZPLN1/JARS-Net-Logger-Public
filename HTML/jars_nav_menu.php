@@ -24,9 +24,9 @@ REVISION 20260528.01
 
 */
 
-// INTERNAL APPLICATION LINKS FOR ALL USERS (OPEN IN SAME TAB)
+  // INTERNAL APPLICATION LINKS FOR ALL USERS (OPEN IN SAME TAB)
 
-  const APP_LINKS = [
+  $app_links = [
     'Net Log Entry' => 'jars_net_log_entry.php',
     'Net Log Viewer' => 'jars_net_log_viewer.php',
     'Net Log Stats' => 'jars_net_stats.php',
@@ -35,13 +35,13 @@ REVISION 20260528.01
 
   // INTERNAL APPLICATION LINKS FOR NON-GUEST USERS (OPEN IN SAME TAB)
 
-  const USR_LINKS = [
+  $usr_links = [
     'Change Password' => 'jars_change_password.php'
   ];
 
   // INTERNAL APPLICATION LINKS FOR ADMIN USERS (OPEN IN SAME TAB)
 
-  const ADM_LINKS = [
+  $adm_links = [
     'Net Manager' => 'jars_net_manager.php',
     'User Manager' => 'jars_user_manager.php',
     'Announcement<br>Manager' => 'jars_announcement_manager.php',
@@ -50,33 +50,33 @@ REVISION 20260528.01
 
   // DATA EXP LINKS FOR ADMIN USERS (DOWNLOAD FILE)
 
-  const EXP_LOG_LINKS = [
+  $exp_log_links = [
     'ADI/ADIF Format' => 'jars_export_net_logs.php?format=adi',
     'CSV Format' => 'jars_export_net_logs.php?format=csv',
     'SQL Format' => 'jars_export_net_logs.php?format=sql'
   ];
 
-  const EXP_VIS_LINKS = [
+  $exp_vis_links = [
     'CSV Format' => 'jars_export_visitor_list.php?format=csv',
     'SQL Format' => 'jars_export_visitor_list.php?format=sql'
   ];
 
-  $self = array_search($base, APP_LINKS);
+  $self = array_search($base, $app_links);
 
-  if ($self) {
-#    unset(APP_LINKS[$self]);
+  if ($self !== false) {
+      unset($app_links[$self]);
   }
 
-  $self = array_search($base, USR_LINKS);
+  $self = array_search($base, $usr_links);
 
-  if ($self) {
-#    unset(USR_LINKS[$self]);
+  if ($self !== false) {
+    unset($usr_links[$self]);
   }
 
-  $self = array_search($base, ADM_LINKS);
+  $self = array_search($base, $adm_links);
 
-  if ($self) {
-#    unset(ADM_LINKS[$self]);
+  if ($self !== false) {
+    unset($adm_links[$self]);
   }
 
   if (!isset($en_log_entry)) {
@@ -87,18 +87,21 @@ REVISION 20260528.01
     $en_live_log = false;
   }
 
-  $show_settings = (((!$_SESSION['guest'] && count(USR_LINKS) > 0) || $en_log_entry) && !$en_live_log);
-  $show_admin = ($_SESSION['admin'] && (count(ADM_LINKS) > 0 || count(EXP_LOG_LINKS) > 0 || count(EXP_VIS_LINKS) > 0));
-  $show_exp_log = (count(EXP_LOG_LINKS) > 0);
-  $show_exp_vis = (count(EXP_VIS_LINKS) > 0);
-  $show_links = (((count(APP_LINKS) > 0 || count(WEB_LINKS) > 0) && !$en_live_log) || (count(WEB_LINKS) > 0 && $en_live_log));
-  $show_menu = (!$en_live_log || ($show_links && $en_live_log));
+  $admin = (!isset($_SESSION['admin'])) ? false : $_SESSION['admin'];
+  $guest = (!isset($_SESSION['guest'])) ? false : $_SESSION['guest'];
 
-  $hr_main = ($show_settings || $show_admin || $show_links);
-  $hr_admin = (($show_admin && count(ADM_LINKS) > 0) && (count(EXP_LOG_LINKS) > 0 || count(EXP_VIS_LINKS) > 0));
-  $hr_link = (count(APP_LINKS) > 0 && count(WEB_LINKS) > 0);
+  $dsp_set = (((!$guest && count($usr_links) > 0) || $en_log_entry) && !$en_live_log);
+  $dsp_adm = ($admin && (count($adm_links) > 0 || count($exp_log_links) > 0 || count($exp_vis_links) > 0));
+  $dsp_exp_log = (count($exp_log_links) > 0);
+  $dsp_exp_vis = (count($exp_vis_links) > 0);
+  $dsp_lnk = (((count($app_links) > 0 || count(WEB_LINKS) > 0) && !$en_live_log) || (count(WEB_LINKS) > 0 && $en_live_log));
+  $dsp_mnu = (!$en_live_log || ($dsp_lnk && $en_live_log));
 
-  if ($show_menu) {
+  $dsp_hr_mnu = ($dsp_set || $dsp_adm || $dsp_lnk);
+  $dsp_hr_adm = (($dsp_adm && count($adm_links) > 0) && (count($exp_log_links) > 0 || count($exp_vis_links) > 0));
+  $dsp_hr_lnk = (count($app_links) > 0 && count(WEB_LINKS) > 0);
+
+  if ($dsp_mnu) {
     echo '      <div class="header_right">' . "\n";
     echo "        <nav>\n";
     echo '          <ul class="nav_menu">' . "\n";
@@ -107,7 +110,7 @@ REVISION 20260528.01
     echo '              <ul class="nav_main_menu">' . "\n";
   }
 
-  if ($show_settings) {
+  if ($dsp_set) {
     echo '                <li class="nav_sub_menu_1">' . "\n";
     echo "                  <span>Settings</span>\n";
     echo '                  <ul class="nav_items_1">' . "\n";
@@ -117,7 +120,7 @@ REVISION 20260528.01
     }
 
     if ($_SESSION['guest'] == false) {
-      foreach (USR_LINKS as $title => $link) {
+      foreach ($usr_links as $title => $link) {
         echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
       }
     }
@@ -126,25 +129,25 @@ REVISION 20260528.01
     echo "                </li>\n";
   }
 
-  if ($show_admin) {
+  if ($dsp_adm) {
     echo '                <li class="nav_sub_menu_1">' . "\n";
     echo "                  <span>Admin</span>\n";
     echo '                  <ul class="nav_items_1">' . "\n";
 
-    foreach (ADM_LINKS as $title => $link) {
+    foreach ($adm_links as $title => $link) {
       echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
     }
 
-    if ($hr_admin) {
+    if ($dsp_hr_adm) {
       echo "                    <hr>\n";
     }
 
-    if ($show_exp_log) {
+    if ($dsp_exp_log) {
       echo '                    <li class="nav_sub_menu_2">' . "\n";
       echo "                      <span>Export Net Logs</span>\n";
       echo '                      <ul class="nav_items_2">' . "\n";
 
-      foreach (EXP_LOG_LINKS as $title => $link) {
+      foreach ($exp_log_links as $title => $link) {
         echo '                        <li><a href="' . $link . '">' . $title . "</a></li>\n";
       }
 
@@ -152,12 +155,12 @@ REVISION 20260528.01
       echo "                    </li>\n";
     }
 
-    if ($show_exp_vis) {
+    if ($dsp_exp_vis) {
       echo '                    <li class="nav_sub_menu_2">' . "\n";
       echo "                      <span>Export Visitor List</span>\n";
       echo '                      <ul class="nav_items_2">' . "\n";
 
-      foreach (EXP_VIS_LINKS as $title => $link) {
+      foreach ($exp_vis_links as $title => $link) {
         echo '                        <li><a href="' . $link . '">' . $title . "</a></li>\n";
       }
 
@@ -169,18 +172,18 @@ REVISION 20260528.01
     echo "                </li>\n";
   }
 
-  if ($show_links) {
+  if ($dsp_lnk) {
     echo '                <li class="nav_sub_menu_1">' . "\n";
     echo "                  <span>Links</span>\n";
     echo '                  <ul class="nav_items_1">' . "\n";
 
     if (!$en_live_log) {
-      foreach (APP_LINKS as $title => $link) {
+      foreach ($app_links as $title => $link) {
         echo '                    <li><a href="' . $link . '">' . $title . "</a></li>\n";
       }
     }
 
-    if ($hr_link) {
+    if ($dsp_hr_lnk) {
       echo "                    <hr>\n";
     }
 
@@ -193,14 +196,14 @@ REVISION 20260528.01
   }
 
   if (!$en_live_log) {
-    if ($hr_main) {
+    if ($dsp_hr_mnu) {
       echo "                <hr>\n";
     }
 
     echo '                <li><a href="jars_logout.php">Log Out</a></li>' . "\n";
   }
 
-  if ($show_menu) {
+  if ($dsp_mnu) {
     echo "              </ul>\n";
     echo "            </li>\n";
     echo "          </ul>\n";

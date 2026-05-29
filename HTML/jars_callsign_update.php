@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260520.01
+REVISION 20260528.01
 
 */
 
@@ -89,12 +89,7 @@ function update_callsign($pdo) {
 
   // CHECK CALL FOR () MARKINGS
 
-  if (str_contains($old_db_preferred_name, '(')) {
-    $old_pn = trim(strstr($old_db_preferred_name, '(', true));
-  } else {
-    $old_pn = $old_db_preferred_name;
-  }
-
+  $old_pn = (str_contains($old_db_preferred_name, '(')) ? trim(strstr($old_db_preferred_name, '(', true)) : $old_db_preferred_name;
   $old_preferred_name = $old_pn . ' (Now ' . $new_call . ')';
   $new_preferred_name = $old_pn . ' (AKA ' . $old_call . ')';
 

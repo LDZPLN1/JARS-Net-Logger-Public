@@ -91,11 +91,7 @@ function export_sql($pdo) {
     $values = [];
 
     foreach ($row as $value) {
-      if ($value === null) {
-        $values[] = "NULL";
-      } else {
-        $values[] = $pdo->quote($value);
-      }
+      $values[] = ($value === null) ? "NULL" : $pdo->quote($value);
     }
 
     $new_row = 'INSERT INTO `visitors` VALUES (' . implode(", ", $values) . ");\n";
