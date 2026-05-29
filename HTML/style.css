@@ -562,8 +562,8 @@ th {
 }
 
 .image_menu {
-  height: 32px;
-  width: 32px
+  height: 2em;
+  width: 2em
 }
 
 .img_delete_ann, .img_delete_row, .img_update_ann, .update_user {
