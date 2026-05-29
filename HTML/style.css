@@ -567,8 +567,8 @@ th {
 }
 
 .img_delete_ann, .img_delete_row, .img_update_ann, .update_user {
-  height: 16px;
-  width: 16px
+  height: 1.4em;
+  width: 1.4em
 }
 
 .input_callsign {
