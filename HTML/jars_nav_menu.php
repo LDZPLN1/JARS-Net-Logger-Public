@@ -20,7 +20,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260528.01
+REVISION 20260529.01
 
 */
 
@@ -92,7 +92,7 @@ REVISION 20260528.01
     echo "        <nav>\n";
     echo '          <ul class="nav_menu">' . "\n";
     echo '            <li class="nav_menu_icon">' . "\n";
-    echo '              <span><img class="image_menu" src="images/menu.png"></span>' . "\n";
+    echo '              <svg class="image_menu" fill="currentColor"><use xlink:href="images/sprites.svg#list"/></svg>' . "\n";
     echo '              <ul class="nav_main_menu">' . "\n";
   }
 

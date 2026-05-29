@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260523.01
+  REVISION 20260529.01
 
 */
 
@@ -66,14 +66,14 @@ function add_rows(num_rows) {
       <td><input type="text" class="notes" maxlength="64" disabled></td>
       <td class="checkbox_log_ac"><input type="checkbox" class="checkout" onchange="update_checkout(this)" disabled></td>
       <td class="checkbox_log_ac"><input type="checkbox" class="lid" onchange="update_lid(this)" disabled></td>
-      <td class="image_ac"><img src="images/save_gs.png"
-        title="Save/Update User Info"
-        class="update_user"
-        onclick="update_user(this)"></td>
-      <td class="image_ac"><img src="images/delete_gs.png"
-        title="Delete Row"
-        class="img_delete_row"
-        onclick="delete_row(this)"></td>
+      <td class="image_ac"><svg fill="#7f7f7f" class="update_user" onclick="update_user(this)">
+        <title></title>
+        <use xlink:href="images/sprites.svg#plus-circle"/>
+        </svg></td>
+      <td class="image_ac"><svg fill="#7f7f7f" class="img_delete_row" onclick="delete_row(this)">
+        <title></title>
+        <use xlink:href="images/sprites.svg#dash-circle"/>
+        </svg></td>
     `;
 
     f_table_logs.appendChild(new_row);
@@ -189,7 +189,9 @@ async function lookup_user(f_source, refresh) {
   const f_checkout = current_row.querySelector('.checkout');
   const f_lid = current_row.querySelector('.lid');
   const f_update_user = current_row.querySelector('.update_user');
+  const f_update_user_title = current_row.querySelector('.update_user title');
   const f_delete_row = current_row.querySelector('.img_delete_row');
+  const f_delete_row_title = current_row.querySelector('.img_delete_row title');
 
   const modifier_index = entered_data.indexOf('/');
 
@@ -296,14 +298,14 @@ async function lookup_user(f_source, refresh) {
         f_lid.checked = json_data.lid || false;
         ci_count = json_data.ci_count;
         ci_net_count = json_data.ci_net_count;
-        f_update_user.src = 'images/save_green.png';
-        f_update_user.title = 'Add/Update User Info';
+        f_update_user.style.fill = '#00ff00';
+        f_update_user_title.textContent = 'Add/Update User Info';
       } else if (json_data.status === 'NOT_FOUND') {
-        f_update_user.src = 'images/save_orange.png';
-        f_update_user.title = 'Callsign Not Found';
+        f_update_user.style.fill = '#ff7f00';
+        f_update_user_title.textContent = 'Callsign Not Found';
       } else if (json_data.status == "SHORT_SEARCH") {
-        f_update_user.src = 'images/save_red.png';
-        f_update_user.title = 'Callsign too short for search';
+        f_update_user.style.fill = '#ff0000';
+        f_update_user_title.textContent = 'Callsign too short for search';
       } else if (json_data.status == "MULTIPLE_RECORDS_FOUND") {
         const f_table_callsigns = document.querySelector('#table_callsigns tbody');
         f_table_callsigns.innerHTML = "";
@@ -326,18 +328,18 @@ async function lookup_user(f_source, refresh) {
         f_stored_element = f_source;
         show_callsign();
       } else {
-        f_update_user.src = 'images/save_red.png';
-        f_update_user.title = 'Error performing lookup';
+        f_update_user.style.fill = '#ff0000';
+        f_update_user_title.textContent = 'Error performing lookup';
       }
     } else {
       console.error('API call failed');
-      f_update_user.src = 'images/save_red.png';
-      f_update_user.title = 'ERROR CALLING API';
+      f_update_user.style.fill = '#ff0000';
+      f_update_user_title.textContent = 'ERROR CALLING API';
     }
   } catch (error) {
     console.error('API call failed:', error);
-    f_update_user.src = 'images/save_red.png';
-    f_update_user.title = 'ERROR CALLING API';
+    f_update_user.style.fill = '#ff0000';
+    f_update_user_title.textContent = 'ERROR CALLING API';
   }
 
   // SET HOVER TEXT FOR CALLSIGN
@@ -349,7 +351,8 @@ async function lookup_user(f_source, refresh) {
   }
 
   f_source.title = vis_count;
-  f_delete_row.src = 'images/delete_red.png';
+  f_delete_row.style.fill = '#ff0000';
+  f_delete_row_title.textContent = 'Delete Row';
 
   update_counter();
   update_buttons();
@@ -360,7 +363,7 @@ async function lookup_user(f_source, refresh) {
 // CAPTURE ENTER KEY TO MOVE FOCUS TO THE NEXT LOG ROW
 
 function move_cursor(event, f_source) {
-  if (event.key === 'Enter') {
+  if (event.key === 'Enter' || event.key === 'Tab') {
     event.preventDefault();
     focus_callsign(f_source);
   }
@@ -373,23 +376,6 @@ function overlay_handler_callsign(event) {
     document.removeEventListener('keydown', overlay_handler_callsign);
     close_callsign();
   }
-}
-
-// PRELOAD IMAGES
-
-function preload_images() {
-
-  const image_list = [
-    'images/delete_red.png',
-    'images/save_red.png',
-    'images/save_green.png',
-    'images/save_orange.png'
-  ];
-
-  image_list.forEach(image => {
-    const img = new Image();
-    img.src = image;
-  });
 }
 
 // SELECT CALLSIGN
@@ -770,6 +756,7 @@ function update_row_highlight(row) {
 async function update_user(f_source) {
   const current_row = f_source.closest('tr');
   const f_callsign = current_row.querySelector('.input_callsign');
+  const f_source_title = f_source.querySelector('title');
 
   if (!f_callsign.value.trim()) return;
 
@@ -808,22 +795,22 @@ async function update_user(f_source) {
 
       if (json_data.status === "SUCCESS") {
         alert('User information successfully saved');
-        f_source.src = 'images/save_green.png';
-        f_source.title = 'Add/Update User Info';
+        f_source.style.fill = '#00ff00';
+        f_source_title.textContent = 'Add/Update User Info';
       } else {
         alert('Failed to update user information');
-        f_source.src = 'images/save_red.png';
-        f_source.title = 'Update failed';
+        f_source.style.fill = '#ff0000';
+        f_source_title.textContent = 'Update failed';
       }
     } else {
       alert('Invalid server response!');
-      f_source.src = 'images/save_red.png';
-      f_source.title = 'Invalid server response';
+      f_source.style.fill = '#ff0000';
+      f_source_title.textContent = 'Invalid server response';
     }
   } catch (error) {
     alert('Error calling API');
-    f_source.src = 'images/save_red.png';
-    f_source.title = 'ERROR CALLING API';
+    f_source.style.fill = '#ff0000';
+    f_source_title.textContent = 'ERROR CALLING API';
   }
 
   update_live_logs();
@@ -837,7 +824,6 @@ window.addEventListener('beforeunload', (event) => {
 });
 
 document.getElementById('log_date').value = f_header_date.textContent;
-preload_images();
 add_rows(1);
 update_buttons();
 

@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260528.01
+REVISION 20260529.01
 
 */
 
@@ -179,10 +179,10 @@ if (isset($_POST['mode']) && isset($_POST['record_id'])) {
     echo '>';
     echo "            </td>\n";
     echo '            <td class="image_ac">' . "\n";
-    echo '              <img class="img_update_ann" src="images/save_green.png" onclick="ann_update(this);">' . "\n";
+    echo '              <svg class="img_update_ann" fill="#00ff00" onclick="ann_update(this);"><use xlink:href="images/sprites.svg#plus-circle"/></svg>' . "\n";
     echo "            </td>\n";
     echo '            <td class="image_ac">' . "\n";
-    echo '              <img class="img_delete_ann" src="images/delete_red.png" onclick="ann_delete(this);">' . "\n";
+    echo '              <svg class="img_delete_ann" fill="#ff0000" onclick="ann_delete(this);"><use xlink:href="images/sprites.svg#dash-circle"/></svg>' . "\n";
     echo "            </td>\n";
     echo "          </tr>\n";
   }
@@ -203,7 +203,7 @@ if (isset($_POST['mode']) && isset($_POST['record_id'])) {
               <input type="checkbox" class="cbx_no_end" onclick="toggle_no_end(this);">
             </td>
             <td class="image_ac">
-              <img class="img_update_ann" src="images/save_gs.png" onclick="ann_update(this);" disabled>
+              <svg class="img_update_ann" fill="#7f7f7f" onclick="ann_update(this);" disabled><use xlink:href="images/sprites.svg#plus-circle"/></svg>
             </td>
             <td class="image_ac"></td>
           </tr>

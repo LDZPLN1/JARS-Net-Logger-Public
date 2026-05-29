@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260523.01
+  REVISION 20260529.01
 
 */
 
@@ -47,10 +47,10 @@ function ann_check(f_source) {
   const f_img_update_ann = current_row.querySelector('.img_update_ann')
 
   if (f_source.value.trim() == '') {
-    f_img_update_ann.src = 'images/save_gs.png';
+    f_img_update_ann.style.fill = '#7f7f7f';
     f_img_update_ann.disabled = true;
   } else {
-    f_img_update_ann.src = 'images/save_green.png';
+    f_img_update_ann.style.fill = '#00ff00';
     f_img_update_ann.disabled = false;
   }
 }
