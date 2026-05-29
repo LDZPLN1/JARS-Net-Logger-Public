@@ -92,7 +92,7 @@ REVISION 20260529.01
     echo "        <nav>\n";
     echo '          <ul class="nav_menu">' . "\n";
     echo '            <li class="nav_menu_icon">' . "\n";
-    echo '              <svg class="image_menu" fill="currentColor"><use xlink:href="images/sprites.svg#list"/></svg>' . "\n";
+    echo '              <svg class="image_menu" fill="currentColor"><use xlink:href="images/sprites.svg#three-dots-vertical"/></svg>' . "\n";
     echo '              <ul class="nav_main_menu">' . "\n";
   }
 
