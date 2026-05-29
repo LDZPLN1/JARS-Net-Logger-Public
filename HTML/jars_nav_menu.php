@@ -36,7 +36,7 @@ REVISION 20260529.01
   // INTERNAL APPLICATION LINKS FOR NON-GUEST USERS (OPEN IN SAME TAB)
 
   $usr_links = [
-    'Change Password' => 'jars_change_password.php'
+    'Change Password' => 'jars_password_change.php'
   ];
 
   // INTERNAL APPLICATION LINKS FOR ADMIN USERS (OPEN IN SAME TAB)
