@@ -292,9 +292,9 @@ th {
 }
 
 .chat_icon {
-  height: 80px;
+  height: 64px;
   transition: transform 0.25s ease;
-  width: 80px
+  width: 64px
 }
 
 .chat_icon:hover {
@@ -807,7 +807,8 @@ th {
 }
 
 .textarea_ann {
-  margin: 2px 16px 2px 0px
+  margin: 2px 16px 2px 0px;
+  resize: none
 }
 
 .th_log {
