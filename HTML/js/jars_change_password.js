@@ -88,9 +88,9 @@ function check_password() {
       f_new2.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
     }
   } else {
-      f_new1.style.borderColor = '#bfbfbf';
+      f_new1.style.borderColor = '#7f7f7f';
       f_new1.style.boxShadow = 'none';
-      f_new2.style.borderColor = '#bfbfbf';
+      f_new2.style.borderColor = '#7f7f7f';
       f_new2.style.boxShadow = 'none';
   }
 

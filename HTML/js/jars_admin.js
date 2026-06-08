@@ -255,9 +255,9 @@ function check_password(mode) {
       f_new2.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
     }
   } else {
-    f_new1.style.borderColor = '#bfbfbf';
+    f_new1.style.borderColor = '#7f7f7f';
     f_new1.style.boxShadow = 'none';
-    f_new2.style.borderColor = '#bfbfbf';
+    f_new2.style.borderColor = '#7f7f7f';
     f_new2.style.boxShadow = 'none';
   }
 
@@ -473,10 +473,10 @@ function show_add() {
   document.addEventListener('keydown', overlay_handler_add);
   f_add_username.value = '';
   f_new1.value = '';
-  f_new1.style.borderColor = '#bfbfbf';
+  f_new1.style.borderColor = '#7f7f7f';
   f_new1.style.boxShadow = 'none';
   f_new2.value = '';
-  f_new2.style.borderColor = '#bfbfbf';
+  f_new2.style.borderColor = '#7f7f7f';
   f_new2.style.boxShadow = 'none';
   f_len.textContent = '0';
   f_cap.style.color = '#ff0000';
@@ -500,7 +500,7 @@ function show_add_net() {
 
   f_add_net_name.value = '';
   f_add_net_freq.value = '';
-  f_add_net_freq.style.borderColor = '#bfbfbf';
+  f_add_net_freq.style.borderColor = '#7f7f7f';
   f_add_net_freq.style.boxShadow = 'none';
 
   document.addEventListener('keydown', overlay_handler_add_net);
@@ -531,10 +531,10 @@ function show_change() {
 
   document.addEventListener('keydown', overlay_handler_change);
   f_chg_password_1.value = '';
-  f_chg_password_1.style.borderColor = '#bfbfbf';
+  f_chg_password_1.style.borderColor = '#7f7f7f';
   f_chg_password_1.style.boxShadow = 'none';
   f_chg_password_2.value = '';
-  f_chg_password_2.style.borderColor = '#bfbfbf';
+  f_chg_password_2.style.borderColor = '#7f7f7f';
   f_chg_password_2.style.boxShadow = 'none';
   f_len.textContent = '0';
   f_cap.style.color = '#ff0000';
@@ -737,9 +737,9 @@ function update_user_buttons() {
     f_btn_user_delete.disabled = true;
     f_btn_user_change.style.borderColor = '#ff7f00';
     f_btn_user_change.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 127, 0, 0.6)'
-    f_btn_user_admin.style.borderColor = '#bfbfbf';
+    f_btn_user_admin.style.borderColor = '#7f7f7f';
     f_btn_user_admin.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(191, 191, 191, 0.6)'
-    f_btn_user_delete.style.borderColor = '#bfbfbf';
+    f_btn_user_delete.style.borderColor = '#7f7f7f';
     f_btn_user_delete.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(191, 191, 191, 0.6)'
   } else if (guest == 1) {
     f_btn_user_change.disabled = false;
@@ -747,7 +747,7 @@ function update_user_buttons() {
     f_btn_user_delete.disabled = false;
     f_btn_user_change.style.borderColor = '#ff7f00';
     f_btn_user_change.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 127, 0, 0.6)'
-    f_btn_user_admin.style.borderColor = '#bfbfbf';
+    f_btn_user_admin.style.borderColor = '#7f7f7f';
     f_btn_user_admin.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(191, 191, 191, 0.6)'
     f_btn_user_delete.style.borderColor = '#ff0000 ';
     f_btn_user_delete.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
