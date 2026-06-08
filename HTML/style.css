@@ -19,7 +19,6 @@ body {
 button {
   background-color: #1f1f1f;
   border-radius: 16px;
-  border: 2px solid #ff0000;
   color: #ffffff;
   cursor: pointer;
   font-family: "Inclusive Sans", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -29,19 +28,33 @@ button {
   white-space: nowrap
 }
 
-input, select, textarea {
-  background-color: #0f0f0f;
-  color: #ffffff;
-  font-family: "Inclusive Sans", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-optical-sizing: auto;
-  font-size: 15px
-}
-
 hr {
   background-color: #003fbf;
   border: 0;
   height: 1px;
   margin: 0
+}
+
+input, select, textarea {
+  background-color: #0f0f0f;
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: "Inclusive Sans", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-optical-sizing: auto;
+  font-size: 15px;
+  padding: 4px
+}
+
+input[type="text"], input[type="password"], input[type="date"] {
+  border: 1px solid #bfbfbf;
+  box-sizing: border-box;
+  transition: border-color ease-in-out 0.1s, box-shadow ease-in-out 0.1s
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus {
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)
 }
 
 nav a {
@@ -114,9 +127,19 @@ nav .nav_main_menu {
   z-index: 1
 }
 
-option {
-  padding-left: 8px;
-  padding-right: 8px;
+select {
+  border: 1px solid #bfbfbf;
+  box-sizing: border-box;
+}
+
+select:focus {
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+textarea {
+  resize: none;
 }
 
 table {
@@ -206,44 +229,46 @@ th {
   color: #007fff
 }
 
-.button_green {
-  border: 2px solid #00ff00;
-  width: 200px
+.button_green, .button_green_mb_w, .button_green_w {
+  border: 1px solid #00ff00;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)
 }
 
-.button_green_chat {
-  border: 2px solid #00ff00
-}
-
-.button_green_m {
-  border: 2px solid #00ff00;
+.button_green_mb_w {
   margin-bottom: 8px;
+}
+
+.button_green_mb_w, .button_green_w {
   width: 200px
 }
 
-.button_grey {
-  border: 2px solid #4f4f4f;
-  width: 200px
+.button_grey_mb_w, .button_grey_w {
+  border: 1px solid #bfbfbf;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(191, 191, 191, 0.6)
 }
 
-.button_grey_m {
-  border: 2px solid #4f4f4f;
+.button_grey_mb_w {
   margin-bottom: 8px;
+}
+
+.button_grey_w, .button_grey_mb_w {
   width: 200px
 }
 
-.button_m {
+.button_red, .button_red_mr, .button_red_w, .button_red_mb_w {
+  border: 1px solid #ff0000;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)
+}
+
+.button_red_mb_w {
+  margin-bottom: 16px
+}
+
+.button_red_mr {
   margin-right: 8px
 }
 
-.button_red {
-  border: 2px solid #ff0000;
-  width: 200px
-}
-
-.button_red_mb {
-  border: 2px solid #ff0000;
-  margin-bottom: 16px;
+.button_red_w, .button_red_mb_w {
   width: 200px
 }
 

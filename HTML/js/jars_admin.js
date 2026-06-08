@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260529.01
+  REVISION 20260608.01
 
 */
 
@@ -103,14 +103,16 @@ function check_length(f_source) {
   const f_new_call = document.getElementById('new_call');
 
   if (f_source.value.length >= 4 && f_valid_callsign.value == 1 && f_old_callsign.value.toUpperCase() != f_new_callsign.value.toUpperCase()) {
-    f_btn_update_callsign.style.border = '2px solid #00ff00';
+    f_btn_update_callsign.style.borderColor = '#00ff00';
+    f_btn_update_callsign.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
     f_btn_update_callsign.disabled = false;
     f_old_call.value = f_old_callsign.value.trim().toUpperCase();
     f_new_call.value = f_new_callsign.value.trim().toUpperCase();
     f_old_chg_callsign.textContent = f_old_callsign.value.trim().toUpperCase();
     f_new_chg_callsign.textContent = f_new_callsign.value.trim().toUpperCase();
   } else {
-    f_btn_update_callsign.style.border = '2px solid #ff0000';
+    f_btn_update_callsign.style.borderColor = '#ff0000';
+    f_btn_update_callsign.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
     f_btn_update_callsign.disabled = true;
     f_old_call.value = '';
     f_new_call.value = '';
@@ -138,7 +140,8 @@ function check_net_freq () {
 
   if (use_band != '') {
     document.getElementById('add_net_band').value = use_band;
-    f_add_net_freq.style.outline = '2px solid #00FF00';
+    f_add_net_freq.style.borderColor = '#00ff00';
+    f_add_net_freq.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
 
     if (use_band == '2m' || use_band == '1.25m' || use_band == '70cm') {
       f_add_net_mode.value = 'FM';
@@ -149,7 +152,8 @@ function check_net_freq () {
     update_submodes();
     f_add_net_mode.focus();
   } else {
-    f_add_net_freq.style.outline = '2px solid #FF0000';
+    f_add_net_freq.style.borderColor = '#ff0000';
+    f_add_net_freq.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   }
 
   update_net_create_button();
@@ -163,10 +167,12 @@ function check_net_name() {
 
   if (f_net.value != '') {
     f_button.disabled = false;
-    f_button.style.border = '2px solid #00ff00';
+    f_button.style.borderColor = '#00ff00';
+    f_button.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
   } else {
     f_button.disabled = true;
-    f_button.style.border = '2px solid #ff0000';
+    f_button.style.borderColor = '#ff0000';
+    f_button.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   }
 }
 
@@ -234,26 +240,35 @@ function check_password(mode) {
 
   if (pw_state == 4) {
     if (f_new2.value.trim() == '') {
-      f_new1.style.outline = '2px solid #007f00';
-      f_new2.style.outline = 'none';
+      f_new1.style.borderColor = '#007f00';
+      f_new1.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 127, 0, 0.6)'
+      f_new2.style.borderColor = 'none';
     } else if (f_new1.value.trim() == f_new2.value.trim()) {
-      f_new1.style.outline = '2px solid #00ff00';
-      f_new2.style.outline = '2px solid #00ff00';
+      f_new1.style.borderColor = '#00ff00';
+      f_new1.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
+      f_new2.style.borderColor = '#00ff00';
+      f_new2.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
     } else {
-      f_new1.style.outline = '2px solid #007f00';
-      f_new2.style.outline = '2px solid #ff0000';
+      f_new1.style.borderColor = '#007f00';
+      f_new1.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 127, 0, 0.6)'
+      f_new2.style.borderColor = '#ff0000';
+      f_new2.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
     }
   } else {
-      f_new1.style.outline = 'none';
-      f_new2.style.outline = 'none';
+    f_new1.style.borderColor = '#bfbfbf';
+    f_new1.style.boxShadow = 'none';
+    f_new2.style.borderColor = '#bfbfbf';
+    f_new2.style.boxShadow = 'none';
   }
 
   if (pw_state == 4 && f_new1.value.trim() == f_new2.value.trim() && test != '') {
     f_button.disabled = false;
-    f_button.style.border = '2px solid #00ff00';
+    f_button.style.borderColor = '#00ff00';
+    f_button.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
   } else {
     f_button.disabled = true;
-    f_button.style.border = '2px solid #ff0000';
+    f_button.style.borderColor = '#ff0000';
+    f_button.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   }
 }
 
@@ -349,14 +364,15 @@ async function lookup_user_callsign(f_source, lookup_type) {
   const f_new_callsign = document.getElementById('new_callsign');
 
   try {
-    const response = await fetch(`${dir_path}/api/lookup?callsign=${encodeURIComponent(entered_data)}`);
+    const response = await fetch(`${dir_path}/api/lookup?callsign=${encodeURIComponent(entered_data)}&net_id=0`);
 
     if (response.ok) {
       const json_data = await response.json();
       const f_valid_callsign = document.getElementById('valid_callsign');
 
       if (json_data.status === 'SUCCESS') {
-        f_source.style.outline = '2px solid #00ff00';
+        f_source.style.borderColor = '#00ff00';
+        f_source.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
 
         if (lookup_type == 0) {
           f_valid_callsign.value = 1;
@@ -365,10 +381,12 @@ async function lookup_user_callsign(f_source, lookup_type) {
       } else {
         if (lookup_type == 0) {
           f_preferred_name.textContent = '';
-          f_source.style.outline = '2px solid #ff0000';
+          f_source.style.borderColor = '#ff0000';
+          f_source.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
           f_valid_callsign.value = 0;
         } else {
-          f_source.style.outline = '2px solid #ffFF00';
+          f_source.style.borderColor = '#ffff00';
+          f_source.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 255, 0, 0.6)'
         }
       }
     } else {
@@ -444,9 +462,29 @@ function overlay_handler_delete_2(event) {
 function show_add() {
   const f_overlay_add = document.getElementById("overlay_add");
   const f_add_username = document.getElementById('add_username');
+  const f_new1 = document.getElementById('add_password_1');
+  const f_new2 = document.getElementById('add_password_2');
+  const f_cap = document.getElementById('add_pass_cap');
+  const f_lwr = document.getElementById('add_pass_lwr');
+  const f_num = document.getElementById('add_pass_num');
+  const f_len = document.getElementById('add_pass_len');
   const f_button = document.getElementById('btn_add');
 
   document.addEventListener('keydown', overlay_handler_add);
+  f_add_username.value = '';
+  f_new1.value = '';
+  f_new1.style.borderColor = '#bfbfbf';
+  f_new1.style.boxShadow = 'none';
+  f_new2.value = '';
+  f_new2.style.borderColor = '#bfbfbf';
+  f_new2.style.boxShadow = 'none';
+  f_len.textContent = '0';
+  f_cap.style.color = '#ff0000';
+  f_lwr.style.color = '#ff0000';
+  f_num.style.color = '#ff0000';
+  f_len.style.color = '#ff0000';
+  f_button.style.borderColor = '#ff0000';
+  f_button.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   f_button.disabled = true;
   f_overlay_add.style.display = 'flex';
   f_add_username.focus();
@@ -462,11 +500,13 @@ function show_add_net() {
 
   f_add_net_name.value = '';
   f_add_net_freq.value = '';
-  f_add_net_freq.style.outline = '';
+  f_add_net_freq.style.borderColor = '#bfbfbf';
+  f_add_net_freq.style.boxShadow = 'none';
 
   document.addEventListener('keydown', overlay_handler_add_net);
   f_add_net_name.value = '';
-  f_button.style.border = '2px solid #ff0000';
+  f_button.style.borderColor = '#ff0000';
+  f_button.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   f_button.disabled = true;
   f_overlay_add.style.display = 'flex';
   f_add_net_name.focus();
@@ -479,12 +519,30 @@ function show_add_net() {
 function show_change() {
   const f_overlay_chg = document.getElementById("overlay_chg");
   const f_chg_password_1 = document.getElementById('chg_password_1');
+  const f_chg_password_2 = document.getElementById('chg_password_2');
+  const f_cap = document.getElementById('chg_pass_cap');
+  const f_lwr = document.getElementById('chg_pass_lwr');
+  const f_num = document.getElementById('chg_pass_num');
+  const f_len = document.getElementById('chg_pass_len');
   const f_record_id = document.getElementById('record_id');
   const f_button = document.getElementById('btn_chg');
   const f_user_list = document.getElementById('user_list')
   const f_user_id = f_user_list.value;
 
   document.addEventListener('keydown', overlay_handler_change);
+  f_chg_password_1.value = '';
+  f_chg_password_1.style.borderColor = '#bfbfbf';
+  f_chg_password_1.style.boxShadow = 'none';
+  f_chg_password_2.value = '';
+  f_chg_password_2.style.borderColor = '#bfbfbf';
+  f_chg_password_2.style.boxShadow = 'none';
+  f_len.textContent = '0';
+  f_cap.style.color = '#ff0000';
+  f_lwr.style.color = '#ff0000';
+  f_num.style.color = '#ff0000';
+  f_len.style.color = '#ff0000';
+  f_button.style.borderColor = '#ff0000';
+  f_button.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   f_button.disabled = true;
   f_overlay_chg.style.display = 'flex';
   f_chg_password_1.focus();
@@ -512,6 +570,8 @@ function show_change_net() {
   const net_data = f_net_list.selectedOptions[0].dataset.id.split('::');
 
   document.addEventListener('keydown', overlay_handler_change);
+  f_button.style.borderColor = '#ff0000';
+  f_button.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   f_button.disabled = true;
   f_overlay_chg.style.display = 'flex';
   f_chg_net_name.value = net_data[1];
@@ -587,9 +647,12 @@ function update_net_buttons() {
   f_btn_net_edit.disabled = false;
   f_btn_net_active.disabled = false;
   f_btn_net_delete.disabled = false;
-  f_btn_net_edit.style.border = '2px solid #ff7f00';
-  f_btn_net_active.style.border = '2px solid #ffff00';
-  f_btn_net_delete.style.border = '2px solid #ff0000';
+  f_btn_net_edit.style.borderColor = '#ff7f00';
+  f_btn_net_edit.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 127, 0, 0.6)'
+  f_btn_net_active.style.borderColor = '#ffff00';
+  f_btn_net_active.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 255, 0, 0.6)'
+  f_btn_net_delete.style.borderColor = '#ff0000';
+  f_btn_net_delete.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
 }
 
 // CHECK NET CREATE BUTTON
@@ -610,10 +673,12 @@ function update_net_create_button () {
   }
 
   if (use_band != '' && document.getElementById('add_net_name').value.trim() != '') {
-    f_btn_net_create.style.border = '2px solid #00ff00';
+    f_btn_net_create.style.borderColor = '#00ff00';
+    f_btn_net_create.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
     f_btn_net_create.disabled = false;
-  } else { 
-   f_btn_net_create.style.border = '2px solid #ff0000'; 
+  } else {
+    f_btn_net_create.style.borderColor = '#ff0000';
+    f_btn_net_create.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
     f_btn_net_create.disabled = true;
   }
 }
@@ -670,22 +735,31 @@ function update_user_buttons() {
     f_btn_user_change.disabled = false;
     f_btn_user_admin.disabled = true;
     f_btn_user_delete.disabled = true;
-    f_btn_user_change.style.border = '2px solid #ff7f00';
-    f_btn_user_admin.style.border = '2px solid #4f4f4f';
-    f_btn_user_delete.style.border = '2px solid #4f4f4f';
+    f_btn_user_change.style.borderColor = '#ff7f00';
+    f_btn_user_change.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 127, 0, 0.6)'
+    f_btn_user_admin.style.borderColor = '#bfbfbf';
+    f_btn_user_admin.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(191, 191, 191, 0.6)'
+    f_btn_user_delete.style.borderColor = '#bfbfbf';
+    f_btn_user_delete.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(191, 191, 191, 0.6)'
   } else if (guest == 1) {
     f_btn_user_change.disabled = false;
     f_btn_user_admin.disabled = true;
     f_btn_user_delete.disabled = false;
-    f_btn_user_change.style.border = '2px solid #ff7f00';
-    f_btn_user_admin.style.border = '2px solid #4f4f4f';
-    f_btn_user_delete.style.border = '2px solid #ff0000 ';
+    f_btn_user_change.style.borderColor = '#ff7f00';
+    f_btn_user_change.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 127, 0, 0.6)'
+    f_btn_user_admin.style.borderColor = '#bfbfbf';
+    f_btn_user_admin.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(191, 191, 191, 0.6)'
+    f_btn_user_delete.style.borderColor = '#ff0000 ';
+    f_btn_user_delete.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   } else {
     f_btn_user_change.disabled = false;
     f_btn_user_admin.disabled = false;
     f_btn_user_delete.disabled = false;
-    f_btn_user_change.style.border = '2px solid #ff7f00';
-    f_btn_user_admin.style.border = '2px solid #ffff00';
-    f_btn_user_delete.style.border = '2px solid #ff0000';
+    f_btn_user_change.style.borderColor = '#ff7f00';
+    f_btn_user_change.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 127, 0, 0.6)'
+    f_btn_user_admin.style.borderColor = '#ffff00';
+    f_btn_user_admin.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 255, 0, 0.6)'
+    f_btn_user_delete.style.borderColor = '#ff0000';
+    f_btn_user_delete.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   }
 }

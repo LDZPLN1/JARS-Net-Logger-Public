@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260528.01
+REVISION 20260608.01
 
 */
 
@@ -169,7 +169,7 @@ if (isset($_POST['mode'])) {
         </tr>
         <tr>
           <td colspan="6" class="align_center">
-            <button type="submit" id="btn_add" name="mode" value="add">Create User</button>
+            <button type="submit" id="btn_add" class="button_red_w" name="mode" value="add">Create User</button>
           </td>
         </tr>
       </table>
@@ -200,7 +200,7 @@ if (isset($_POST['mode'])) {
         </tr>
         <tr>
           <td colspan="6" class="align_center">
-            <button type="submit" id="btn_chg" name="mode" value="change">Change Password</button>
+            <button type="submit" id="btn_chg" class="button_red_w" name="mode" value="change">Change Password</button>
           </td>
         </tr>
       </table>
@@ -219,8 +219,8 @@ if (isset($_POST['mode'])) {
           <td colspan="2"></td>
         </tr>
         <tr>
-          <td class="align_center"><button type="button" class="button_green" onclick="close_delete();">Cancel</button></td>
-          <td class="align_center"><button type="submit" name="mode" class="button_red" value="delete">Delete User</button></td>
+          <td class="align_center"><button type="button" class="button_green_w" onclick="close_delete();">Cancel</button></td>
+          <td class="align_center"><button type="submit" name="mode" class="button_red_w" value="delete">Delete User</button></td>
         </tr>
       </table>
       </form>
@@ -263,10 +263,10 @@ if (isset($_POST['mode'])) {
     echo "        </div>\n";
     echo "        <div></div>\n";
     echo '        <div class="align_left">' . "\n";
-    echo '          <button type="button" name="mode" value="add" class="button_green_m" onclick="show_add();">Add User</button><br>' . "\n";
-    echo '          <button type="button" name="mode" value="change" id="btn_user_change" class="button_grey_m" onclick="show_change();">Change User Password</button><br>' . "\n";
-    echo '          <button type="submit" name="mode" value="admin" id="btn_user_admin" class="button_grey_m">Toggle Admin Status</button><br><br>' . "\n";
-    echo '          <button type="button" name="mode" value="delete" id="btn_user_delete" class="button_grey" onclick="show_delete();">Delete User</button>' . "\n";
+    echo '          <button type="button" name="mode" value="add" class="button_green_mb_w" onclick="show_add();">Add User</button><br>' . "\n";
+    echo '          <button type="button" name="mode" value="change" id="btn_user_change" class="button_grey_mb_w" onclick="show_change();">Change User Password</button><br>' . "\n";
+    echo '          <button type="submit" name="mode" value="admin" id="btn_user_admin" class="button_grey_mb_w">Toggle Admin Status</button><br><br>' . "\n";
+    echo '          <button type="button" name="mode" value="delete" id="btn_user_delete" class="button_grey_w" onclick="show_delete();">Delete User</button>' . "\n";
     echo "        </div>\n";
     echo "      </div>\n";
     echo "      </form>\n";

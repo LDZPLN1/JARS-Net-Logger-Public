@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260528.01
+REVISION 20260608.01
 
 */
 
@@ -98,8 +98,8 @@ if ($_SESSION['net_id'] == 0) {
         <span>Check-Ins:</span><span id="check_ins">0</span>&nbsp;<span id="check_ins_unique">(0 Visitors)</span>
       </div>
       <div>
-        <button id="btn_live_log" class="button_m" title="Set Net Control" disabled onclick="toggle_live_log();">Go Live</button>
-        <button id="btn_upload_logs" title="Set Net Control" disabled onclick="submit_logs(false);">Submit Log</button>
+        <button id="btn_live_log" class="button_red_mr" title="Set Net Control" disabled onclick="toggle_live_log();">Go Live</button>
+        <button id="btn_upload_logs" class="button_red" title="Set Net Control" disabled onclick="submit_logs(false);">Submit Log</button>
       </div>
     </div>
     <hr>
@@ -181,7 +181,7 @@ if ($_SESSION['net_id'] == 0) {
     <div id="chat_message_list" class="chat_message_list"></div>
     <div class="input_chat_text">
       <input type="text" id="input_chat" placeholder="Type a message...">
-      <button class="button_green_chat" onclick="send_message()">Send</button>
+      <button class="button_green" onclick="send_message()">Send</button>
     </div>
   </div>
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>

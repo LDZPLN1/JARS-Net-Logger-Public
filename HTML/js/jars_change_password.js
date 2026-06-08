@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260518.01
+  REVISION 20260608.01
 
 */
 
@@ -73,26 +73,35 @@ function check_password() {
 
   if (pw_state == 4) {
     if (f_new2.value.trim() == '') {
-      f_new1.style.outline = '2px solid #007f00';
-      f_new2.style.outline = 'none';
+      f_new1.style.borderColor = '#007f00';
+      f_new1.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 127, 0, 0.6)'
+      f_new2.style.boxShadow = 'none';
     } else if (f_new1.value.trim() == f_new2.value.trim()) {
-      f_new1.style.outline = '2px solid #00ff00';
-      f_new2.style.outline = '2px solid #00ff00';
+      f_new1.style.borderColor = '#00ff00';
+      f_new1.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
+      f_new2.style.borderColor = '#00ff00';
+      f_new2.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
     } else {
-      f_new1.style.outline = '2px solid #007f00';
-      f_new2.style.outline = '2px solid #ff0000';
+      f_new1.style.borderColor = '#007f00';
+      f_new1.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 127, 0, 0.6)'
+      f_new2.style.borderColor = '#ff0000';
+      f_new2.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
     }
   } else {
-      f_new1.style.outline = 'none';
-      f_new2.style.outline = 'none';
+      f_new1.style.borderColor = '#bfbfbf';
+      f_new1.style.boxShadow = 'none';
+      f_new2.style.borderColor = '#bfbfbf';
+      f_new2.style.boxShadow = 'none';
   }
 
   if (pw_state == 4 && f_new1.value.trim() == f_new2.value.trim() && test != '') {
     f_btn_change_password.disabled = false;
-    f_btn_change_password.style.border = '2px solid #00ff00';
+    f_btn_change_password.style.borderColor = '#00ff00';
+    f_btn_change_password.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
   } else {
     f_btn_change_password.disabled = true;
-    f_btn_change_password.style.border = '2px solid #ff0000';
+    f_btn_change_password.style.borderColor = '#ff0000';
+    f_btn_change_password.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
   }
 }
 

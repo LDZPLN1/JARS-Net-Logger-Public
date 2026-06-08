@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260528.01
+REVISION 20260608.01
 
 */
 
@@ -194,7 +194,7 @@ if (isset($_POST['mode'])) {
         </tr>
         <tr>
           <td colspan="2" class="align_center">
-            <button type="submit" id="btn_net_create" name="mode" value="add">Create Net</button>
+            <button type="submit" id="btn_net_create" class="button_red_w" name="mode" value="add">Create Net</button>
           </td>
         </tr>
       </table>
@@ -216,7 +216,7 @@ if (isset($_POST['mode'])) {
         </tr>
         <tr>
           <td colspan="2" class="align_center">
-            <button type="submit" id="btn_net_change" name="mode" value="change">Change Net Name</button>
+            <button type="submit" id="btn_net_change" class="button_red_w" name="mode" value="change">Change Net Name</button>
           </td>
         </tr>
       </table>
@@ -233,8 +233,8 @@ if (isset($_POST['mode'])) {
           <td colspan="2"></td>
         </tr>
         <tr>
-          <td class="align_center"><button type="button" class="button_green" onclick="close_delete();">Cancel</button></td>
-          <td class="align_center"><button type="button" class="button_red" onclick="show_delete_2();">Delete Net</button></td>
+          <td class="align_center"><button type="button" class="button_green_w" onclick="close_delete();">Cancel</button></td>
+          <td class="align_center"><button type="button" class="button_red_w" onclick="show_delete_2();">Delete Net</button></td>
         </tr>
       </table>
     </div>
@@ -251,8 +251,8 @@ if (isset($_POST['mode'])) {
           <td colspan="2"></td>
         </tr>
         <tr>
-          <td class="align_center"><button type="submit" name="mode" class="button_red" value="delete">Delete Net</button></td>
-          <td class="align_center"><button type="button" class="button_green" onclick="close_delete_2();">Cancel</button></td>
+          <td class="align_center"><button type="submit" name="mode" class="button_red_w" value="delete">Delete Net</button></td>
+          <td class="align_center"><button type="button" class="button_green_w" onclick="close_delete_2();">Cancel</button></td>
         </tr>
       </table>
       </form>
@@ -305,10 +305,10 @@ if (isset($_POST['mode'])) {
   echo ($result) ? 'left' : 'center';
 
   echo '">' . "\n";
-  echo '          <button type="button" name="mode" value="add" class="button_green_m" onclick="show_add_net();">Add Net</button><br>' . "\n";
-  echo '          <button type="button" name="mode" value="change" id="btn_net_edit" class="button_grey_m" onclick="show_change_net();">Edit Net Name</button><br>' . "\n";
-  echo '          <button type="submit" name="mode" value="active" id="btn_net_active" class="button_grey_m">Toggle Net Status</button><br><br>' . "\n";
-  echo '          <button type="button" name="mode" value="delete" id="btn_net_delete" class="button_grey" onclick="show_delete_1();">Delete Net</button>' . "\n";
+  echo '          <button type="button" name="mode" value="add" class="button_green_mb_w" onclick="show_add_net();">Add Net</button><br>' . "\n";
+  echo '          <button type="button" name="mode" value="change" id="btn_net_edit" class="button_grey_mb_w" onclick="show_change_net();">Edit Net Name</button><br>' . "\n";
+  echo '          <button type="submit" name="mode" value="active" id="btn_net_active" class="button_grey_mb_w">Toggle Net Status</button><br><br>' . "\n";
+  echo '          <button type="button" name="mode" value="delete" id="btn_net_delete" class="button_grey_w" onclick="show_delete_1();">Delete Net</button>' . "\n";
   echo "        </div>\n";
 
   if (!$result) echo "        <div></div>\n";

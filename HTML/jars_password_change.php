@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260528.01
+REVISION 20260608.01
 
 */
 
@@ -155,7 +155,7 @@ if (isset($_POST['mode'])) {
         </tr>
         <tr>
           <td colspan="6" class="align_center">
-            <button id="btn_change_password" type="submit" name="mode" value="change">Change Password</button>
+            <button id="btn_change_password" class="button_red_w" type="submit" name="mode" value="change">Change Password</button>
           </td>
         </tr>
       </table>

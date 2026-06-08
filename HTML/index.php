@@ -208,8 +208,8 @@ if (isset($_POST['mode'])) {
           </td>
           <td>
             <div class="align_center">
-              <button type="submit" id="button_login" name="mode" value="login" class="button_red_mb">Net Control Login</button><br>
-              <button type="submit" id="button_live_log" name="mode" value="live" class="button_red">View Live Log</button>
+              <button type="submit" id="button_login" name="mode" value="login" class="button_red_mb_w">Net Control Login</button><br>
+              <button type="submit" id="button_live_log" name="mode" value="live" class="button_red_w">View Live Log</button>
             </div>
           </td>
         </tr>

@@ -33,8 +33,6 @@ const net_id = document.getElementById('title_text').dataset.id;
 const c_hlgt_lid = '#4f0000';
 const c_hlgt_checkout = '#004f00';
 const c_hlgt_in_out = '#4f4f00';
-const c_upd_btn_dis_bdr = '2px solid #ff0000';
-const c_upd_btn_en_bdr = '2px solid #00ff00';
 
 var auto_hide = false;
 var data_in_flight = false;
@@ -475,6 +473,8 @@ async function submit_logs(append) {
           data_in_flight = false;
           submit_logs(true)
         }
+      } else if (json_data.status == 'REJECTED') {
+        alert('YOUR LOG SUBMISSION WAS REJECTED. THIS LOG HAS ALREADY BEEN SUBMITTED AND CANNOT BE ACCEPTED A SECOND TIME');
       } else {
         alert('Failed to upload data!');
       }
@@ -515,12 +515,14 @@ async function toggle_live_log() {
 
   if (enable_live_log) {
     f_btn_live_log.title = 'Disable Live';
-    f_btn_live_log.style.border = c_upd_btn_en_bdr;
+    f_btn_live_log.style.borderColor = '#00ff00';
+    f_btn_live_log.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
     io_logs.emit('log-open', net_id);
     update_live_logs();
   } else {
     f_btn_live_log.title = 'Go Live';
-    f_btn_live_log.style.border = c_upd_btn_dis_bdr;
+    f_btn_live_log.style.borderColor = '#ff0000';
+    f_btn_live_log.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
     io_logs.emit('log-close', net_id);
   }
 }
@@ -573,14 +575,16 @@ function update_buttons() {
 
       // ENABLED
 
-      f_btn_upload_logs.style.border = c_upd_btn_en_bdr;
+      f_btn_upload_logs.style.borderColor = '#00ff00';
+      f_btn_upload_logs.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)'
       f_btn_upload_logs.title = 'Submit Log';
       f_btn_upload_logs.disabled = false;
     } else {
 
       // DISABLED
 
-      f_btn_upload_logs.style.border = c_upd_btn_dis_bdr;
+      f_btn_upload_logs.style.borderColor = '#ff0000';
+      f_btn_upload_logs.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)'
       f_btn_upload_logs.disabled = true;
 
       if (f_net_control.value.trim() == '') {

@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260528.01
+REVISION 20260608.01
 
 */
 
@@ -202,7 +202,7 @@ if (isset($_POST['mode'])) {
           </tr>
         </table><br>
         <input type="hidden" id="valid_callsign" name="valid_callsign" value="0">
-        <div class="align_center"><button type="button" id="btn_update_callsign" class="button_red" onclick="show_change_callsign();">Update Callsign</button></div>
+        <div class="align_center"><button type="button" id="btn_update_callsign" class="button_red_w" onclick="show_change_callsign();">Update Callsign</button></div>
       </div>
 <?php require_once('jars_footer.php'); ?>
   </div>

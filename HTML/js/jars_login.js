@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260523.01
+  REVISION 20260608.01
 
 */
 
@@ -31,10 +31,12 @@ function check_login() {
   const f_button_login = document.getElementById('button_login');
 
   if (f_username[0].value.trim() == '' || f_password[0].value.trim() == '') {
-    f_button_login.style.border = '2px solid #ff0000';
+    f_button_login.style.borderColor = '#ff0000';
+    f_button_login.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)';
     f_button_login.disabled = true;
   } else {
-    f_button_login.style.border = '2px solid #00ff00';
+    f_button_login.style.borderColor = '#00ff00';
+    f_button_login.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)';
     f_button_login.disabled = false;
   }
 }
@@ -47,10 +49,12 @@ function update_guest_login() {
   const net_active = f_net_list.selectedOptions[0].dataset.id;
 
   if (net_active == 1) {
-    f_button_live_log.style.border = '2px solid #00ff00';
+    f_button_live_log.style.borderColor = '#00ff00';
+    f_button_live_log.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)';
     f_button_live_log.disabled = false;
   } else {
-    f_button_live_log.style.border = '2px solid #ff0000';
+    f_button_live_log.style.borderColor = '#ff0000';
+    f_button_live_log.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)';
     f_button_live_log.disabled = true;
   }
 }
@@ -77,10 +81,12 @@ if (document.getElementById('net_list')) {
     const net_active = f_net_list.selectedOptions[0].dataset.id;
 
     if (net_active == 1) {
-      f_button_live_log.style.border = '2px solid #00ff00';
+      f_button_live_log.style.borderColor = '#00ff00';
+      f_button_live_log.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6)';
       f_button_live_log.disabled = false;
     } else {
-      f_button_live_log.style.border = '2px solid #ff0000';
+      f_button_live_log.style.borderColor = '#ff0000';
+      f_button_live_log.style.boxShadow = 'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.8)';
       f_button_live_log.disabled = true;
     }
   })

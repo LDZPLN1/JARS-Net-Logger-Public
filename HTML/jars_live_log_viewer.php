@@ -125,7 +125,7 @@ try {
     <div id="chat_message_list" class="chat_message_list"></div>
     <div class="input_chat_text">
       <input type="text" id="input_chat" placeholder="Type a message...">
-      <button class="button_green_chat" onclick="send_message()">Send</button>
+      <button class="button_green" onclick="send_message()">Send</button>
     </div>
   </div>
   <script>
