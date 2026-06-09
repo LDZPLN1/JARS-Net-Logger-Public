@@ -348,6 +348,7 @@ th {
 
 .chat_message.sender {
   color: #7f7f7f;
+  font-size: 13px;
   padding: 0
 }
 
