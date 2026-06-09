@@ -608,6 +608,7 @@ function update_case(f_source) {
   const callsign = f_source.value.toUpperCase();
   f_source.value = callsign;
   update_buttons();
+  sender_update();
 }
 
 // UPDATE ROW HIGHLIGHTING WHEN CHECK OUT IS CHANGED

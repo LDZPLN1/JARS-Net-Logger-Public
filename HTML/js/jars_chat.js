@@ -177,13 +177,13 @@ function add_links(message) {
 function send_message() {
   const message = document.getElementById('input_chat').value;
 
-  if (!net_control) {
-    var sender_id = document.getElementById('input_chat_callsign').value;
-  } else {
+  if (net_control) {
     var sender_id = document.getElementById('net_control').value;
 
     if (sender_id == '') {
       sender_id = 'Net Control';
+  } else {
+    var sender_id = document.getElementById('input_chat_callsign').value;
     }
   }
 
@@ -209,7 +209,16 @@ function send_message() {
 
 function sender_update() {
   const net_id = document.getElementById('title_text').dataset.id;
-  const sender_id = document.getElementById('input_chat_callsign').value;
+
+  if (net_control) {
+    var sender_id = document.getElementById('net_control').value;
+
+    if (sender_id == '') {
+      sender_id = 'Net Control';
+    }
+  } else {
+    var sender_id = document.getElementById('input_chat_callsign').value;
+  }
 
   io_chat.emit("update-sender", {'net_id': net_id, 'sender': sender_id});
 }
