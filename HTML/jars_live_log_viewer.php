@@ -22,7 +22,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
-REVISION 20260528.01
+REVISION 20260609.01
 
 */
 
@@ -121,7 +121,7 @@ try {
   <div id="jars_chat" class="jars_chat"><img src="images/chat_red.png" id="chat_icon" class="chat_icon" onclick="toggle_chat();"></div>
   <div id="chat_container" class="chat_container">
     <div class="chat_header">JARS Chat <span id="chat_count"></span></div>
-    <div class="chat_callsign"><span class="pad_right">Callsign/Name:</span><input type="text" id="input_chat_callsign" maxlength="16" value=""></div>
+    <div class="chat_callsign"><span class="pad_right">Callsign/Name:</span><input type="text" id="input_chat_callsign" maxlength="16" value="" onChange="sender_update();"></div>
     <div id="chat_message_list" class="chat_message_list"></div>
     <div class="input_chat_text">
       <input type="text" id="input_chat" placeholder="Type a message...">

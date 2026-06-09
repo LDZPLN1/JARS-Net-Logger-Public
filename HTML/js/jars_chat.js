@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260521.01
+  REVISION 20260609.01
 
 */
 
@@ -50,32 +50,42 @@ f_input_chat.addEventListener('keydown', (event) => {
   }
 })
 
+// CONNECT TO SERVER
+
 io_chat.on('connect', () => {
   const net_id = document.getElementById('title_text').dataset.id;
 
+  // SET CHAT SENDER NAME
+
   if (!net_control) {
-    const f_chat_callsign = document.getElementById('input_chat_callsign').value;
-    sender_id = f_chat_callsign;
+    var sender_id = document.getElementById('input_chat_callsign').value;
   } else {
-    const f_net_control = document.getElementById('net_control').value;
-    sender_id = f_net_control;
+    var sender_id = document.getElementById('net_control').value;
 
     if (sender_id == '') {
       sender_id = 'Net Control';
     }
   }
 
+  // JOIN CHAT ROOM
+
   io_chat.emit("join", {room: net_id, 'sender': sender_id});
   f_chat_icon.src = 'images/chat_green.png';
 })
+
+// UPDATE COUNT OF ROOM MEMBERS
 
 io_chat.on('stat-members', (counter) => {
   document.getElementById('chat_count').textContent = `[${counter}]`;
 })
 
+// UPDATE ICON ON DISCONNECT
+
 io_chat.on('disconnect', () => {
   f_chat_icon.src = 'images/chat_red.png';
 })
+
+// SHOW USER HAS LEFT THE ROOM
 
 io_chat.on('leave', (msg) => {
   const f_chat_message_list = document.getElementById('chat_message_list');
@@ -88,6 +98,8 @@ io_chat.on('leave', (msg) => {
   last_sender = '';
 })
 
+// SHOW USER HAS JOINED THE ROOM
+
 io_chat.on('join', (msg) => {
   const f_chat_message_list = document.getElementById('chat_message_list');
   const new_div = document.createElement('div');
@@ -98,6 +110,21 @@ io_chat.on('join', (msg) => {
   f_chat_message_list.scrollTop = f_chat_message_list.scrollHeight;
   last_sender = '';
 })
+
+// SHOW SENDER NAME UPDATE
+
+io_chat.on('name-change', (msg) => {
+  const f_chat_message_list = document.getElementById('chat_message_list');
+  const new_div = document.createElement('div');
+
+  new_div.className = 'chat_message sender';
+  new_div.textContent = msg.old + ' updated to ' + msg.new;
+  f_chat_message_list.appendChild(new_div);
+  f_chat_message_list.scrollTop = f_chat_message_list.scrollHeight;
+  last_sender = '';
+})
+
+// SHOW RECEIVED MESSAGE
 
 io_chat.on('message', (msg) => {
   const f_chat_message_list = document.getElementById('chat_message_list');
@@ -131,6 +158,8 @@ io_chat.on('message', (msg) => {
   }
 })
 
+// CONVERT LINKS TO CLICKABLE HTML
+
 function add_links(message) {
   const url_regex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
 
@@ -143,15 +172,15 @@ function add_links(message) {
   });
 }
 
+// SEND CHAT MESSAGE
+
 function send_message() {
   const message = document.getElementById('input_chat').value;
 
   if (!net_control) {
-    const f_chat_callsign = document.getElementById('input_chat_callsign').value;
-    sender_id = f_chat_callsign;
+    var sender_id = document.getElementById('input_chat_callsign').value;
   } else {
-    const f_net_control = document.getElementById('net_control').value;
-    sender_id = f_net_control;
+    var sender_id = document.getElementById('net_control').value;
 
     if (sender_id == '') {
       sender_id = 'Net Control';
@@ -175,6 +204,17 @@ function send_message() {
     last_sender = '';
   }
 }
+
+// UPDATE SENDER
+
+function sender_update() {
+  const net_id = document.getElementById('title_text').dataset.id;
+  const sender_id = document.getElementById('input_chat_callsign').value;
+
+  io_chat.emit("update-sender", {'net_id': net_id, 'sender': sender_id});
+}
+
+// SHOW/HIDE CHAT WINDOW
 
 function toggle_chat() {
   chat_visible = !chat_visible;

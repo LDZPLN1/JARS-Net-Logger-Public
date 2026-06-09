@@ -336,6 +336,11 @@ th {
   background-color: #3f003f
 }
 
+.chat_message.alert {
+  align-self: flex-start;
+  background-color: #7f0000
+}
+
 .chat_message.received {
   align-self: flex-start;
   background-color: #00007f

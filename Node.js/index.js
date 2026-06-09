@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260519.01
+  REVISION 20260609.01
 
 */
 
@@ -45,10 +45,10 @@ chat.on('connection', (socket) => {
         id_map.delete(socket.id);
       }
     }
-  });
+  })
 
   socket.on('disconnect', () => {
-  });
+  })
 
   socket.on('join', (msg) => {
     socket.join(msg.room);
@@ -56,18 +56,21 @@ chat.on('connection', (socket) => {
     const count = chat.adapter.rooms.get(msg.room).size;
     chat.to(msg.room).emit('stat-members', count);
     socket.to(msg.room).emit('join', msg.sender);
-  });
+  })
 
   socket.on('message', (msg) => {
     socket.to(msg.net_id).emit('message', msg);
+  })
 
+  socket.on('update-sender', (msg) => {
     const current_name = id_map.get(socket.id);
 
     if (current_name != msg.sender) {
       id_map.set(socket.id, msg.sender);
+      chat.to(msg.net_id).emit('name-change', {'old': current_name, "new": msg.sender});
     }
-  });
-});
+  })
+})
 
 logs.on('connection', (socket) => {
   socket.on('log-close', (msg) => {
@@ -81,11 +84,11 @@ logs.on('connection', (socket) => {
 
     chat.to(msg).emit('message', {net_id: msg, sender: 'Admin', message: 'Chat closing in 30 seconds'});
     setTimeout(send_close, 30000, msg);
-  });
+  })
 
   socket.on('log-join', (msg) => {
     socket.join(msg);
-  });
+  })
 
   socket.on('log-list', () => {
     const all_rooms = logs.adapter.rooms;
@@ -93,7 +96,7 @@ logs.on('connection', (socket) => {
     const room_list = [...all_rooms.keys()].filter(room => !socket_ids.has(room));
 
     socket.emit('log-list', room_list);
-  });
+  })
 
   socket.on('log-open', (msg) => {
     socket.join(msg);
@@ -103,21 +106,21 @@ logs.on('connection', (socket) => {
     const room_list = [...all_rooms.keys()].filter(room => !socket_ids.has(room));
 
     logs.emit('log-list', room_list);
-  });
+  })
 
   socket.on('log-request', (msg) => {
     logs.to(msg).emit('log-request');
-  });
+  })
 
   socket.on('log-update', (msg) => {
     logs.to(msg.log.meta.net_id).emit('log-data', msg);
-  });
+  })
 
   function send_close(room) {
     logs.to(room).emit('log-shutdown');
   }
-});
+})
 
 http_server.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
-});
+})

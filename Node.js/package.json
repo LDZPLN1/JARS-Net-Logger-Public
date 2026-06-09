@@ -1,6 +1,6 @@
 {
   "name": "jars_chat_service",
-  "version": "20260519.01",
+  "version": "20260609.01",
   "description": "JARS Chat Service",
   "main": "index.js",
   "scripts": {
