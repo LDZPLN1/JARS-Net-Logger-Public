@@ -151,7 +151,7 @@ io_logs.on('log-shutdown', () => {
 function rotate_banner() {
   active_index = (active_index + 1) % banners.length;
   f_banner_message.classList.remove('active');
-  
+
   setTimeout(() => {
     f_banner_message.textContent = banners[active_index];
     f_banner_message.classList.add('active');

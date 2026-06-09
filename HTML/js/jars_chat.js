@@ -165,9 +165,11 @@ function add_links(message) {
 
   return message.replace(url_regex, (url) => {
     let hyperlink = url;
+
     if (!hyperlink.match('^https?:\/\/')) {
       hyperlink = 'http://' + hyperlink;
     }
+
     return `<a href="${hyperlink}" target="_blank" rel="noopener noreferrer">${url}</a>`;
   });
 }
@@ -182,9 +184,9 @@ function send_message() {
 
     if (sender_id == '') {
       sender_id = 'Net Control';
+    }
   } else {
     var sender_id = document.getElementById('input_chat_callsign').value;
-    }
   }
 
   if (message) {
