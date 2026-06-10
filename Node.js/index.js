@@ -84,7 +84,6 @@ logs.on('connection', (socket) => {
 
     chat.to(msg).emit('message', {net_id: msg, sender: 'Admin', message: 'Chat closing in 30 seconds'});
     setTimeout(send_close, 30000, msg);
-    id_map.clear();
   })
 
   socket.on('log-join', (msg) => {
