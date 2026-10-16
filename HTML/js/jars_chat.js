@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License along with
   this program. If not, see <https://www.gnu.org/licenses/>.
 
-  REVISION 20260609.01
+  REVISION 20261015.01
 
 */
 
@@ -31,15 +31,21 @@ const f_chat_container = document.getElementById('chat_container');
 var chat_visible = false;
 var last_sender = '';
 
-// CHECK IF RUNING FROM LOG ENTRY OR LIVE LOG VIEWER
+// CHECK IF RUNNING FROM LOG ENTRY OR LIVE LOG VIEWER
 
 if (document.getElementById('log_date')) {
   var net_control = true;
 } else {
   var net_control = false;
   const f_chat_callsign = document.getElementById('input_chat_callsign');
-  const random_hex = Math.floor(Math.random() * 0x10000).toString(16).padStart(4, '0');
-  f_chat_callsign.value = 'Guest_' + random_hex;
+  const cookies = new URLSearchParams(document.cookie.replaceAll('; ', '&'));
+
+  if (cookies.has('chat_name')) {
+    f_chat_callsign.value = cookies.get('chat_name');
+  } else {
+    const random_hex = Math.floor(Math.random() * 0x10000).toString(16).padStart(4, '0');
+    f_chat_callsign.value = 'Guest_' + random_hex;
+  }
 }
 
 // CAPTURE ENTER KEY TO SEND MESSAGE
@@ -220,6 +226,7 @@ function sender_update() {
     }
   } else {
     var sender_id = document.getElementById('input_chat_callsign').value;
+    document.cookie = 'chat_name=' + sender_id + '; max-age=31536000; path=/'; 
   }
 
   io_chat.emit("update-sender", {'net_id': net_id, 'sender': sender_id});
